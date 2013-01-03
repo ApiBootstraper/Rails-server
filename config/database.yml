@@ -1,0 +1,56 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: rails_rest_api_bootstrap_development
+  username: root
+  password: 
+  host: localhost
+  port: 3306
+
+test:
+  adapter: mysql2
+  encoding: utf8
+  database: rails_rest_api_bootstrap_test
+  username: root
+  password: 
+  host: localhost
+  port: 3306
+  
+
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: rails_rest_api_bootstrap_development
+#   pool: 5
+#   username: postgres
+#   password:
+#   host: localhost
+#   port: 5432
+# 
+# test:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: rails_rest_api_bootstrap_test
+#   pool: 20
+#   username: postgres
+#   password:
+#   host: localhost
+#   port: 5432
+# 
+# staging:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: rails_rest_api_bootstrap_staging
+#   pool: 5
+#   username: postgres
+#   password:
+#   host: localhost
+#   port: 5432
+# 
+# production:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: rails_rest_api_bootstrap_production
+#   pool: 5
+#   username: rails_rest_api_bootstrap
+#   password:
