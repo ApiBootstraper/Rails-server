@@ -1,64 +1,81 @@
-ActiveAdmin::Dashboards.build do
+ActiveAdmin.register_page "Dashboard" do
 
   # https://github.com/gregbell/active_admin/issues/72
+  content :title => proc{ I18n.t("active_admin.dashboard") } do
 
-  section "Recent Users", :priority => 11 do
-    table_for User.order('created_at desc').limit(10) do
-      column("Username") {|u| link_to(u.username, admin_user_path(u)) }
-      column("Email")    {|u| "#{u.email}" }
-    end
-  end
+    columns do
 
-  section "Stats", :priority => 12 do
-    ul do
-      # li "#{Device.count} devices"
-      li "#{Tracking.count} requests"
-    end
-    hr
-    ul do
-      li "#{User.count} users"
-    end
-  end
+      column do
+        panel "Recent Todos" do
+          # table_for Todo.complete.order('id desc').limit(10) do
+          #   column("State")   {|order| status_tag(order.state)                                    } 
+          #   column("Customer"){|order| link_to(order.user.email, admin_customer_path(order.user)) } 
+          #   column("Total")   {|order| number_to_currency order.total_price                       } 
+          # end
+        end
+      end
 
-  # Define your dashboard sections here. Each block will be
-  # rendered on the dashboard in the context of the view. So just
-  # return the content which you would like to display.
-  
-  # == Simple Dashboard Section
-  # Here is an example of a simple dashboard section
-  #
-  #   section "Recent Posts" do
-  #     ul do
-  #       Post.recent(5).collect do |post|
-  #         li link_to(post.title, admin_post_path(post))
-  #       end
-  #     end
-  #   end
-  
-  # == Render Partial Section
-  # The block is rendered within the context of the view, so you can
-  # easily render a partial rather than build content in ruby.
-  #
-  #   section "Recent Posts" do
-  #     div do
-  #       render 'recent_posts' # => this will render /app/views/admin/dashboard/_recent_posts.html.erb
-  #     end
-  #   end
-  
-  # == Section Ordering
-  # The dashboard sections are ordered by a given priority from top left to
-  # bottom right. The default priority is 10. By giving a section numerically lower
-  # priority it will be sorted higher. For example:
-  #
-  #   section "Recent Posts", :priority => 10
-  #   section "Recent User", :priority => 1
-  #
-  # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
-  
-  # == Conditionally Display
-  # Provide a method name or Proc object to conditionally render a section at run time.
-  #
-  # section "Membership Summary", :if => :memberships_enabled?
-  # section "Membership Summary", :if => Proc.new { current_admin_user.account.memberships.any? }
+      column do
+        panel "Recent Users" do
+          table_for User.order('created_at desc').limit(10).each do |user|
+            column(:username) {|user| link_to(user.id, admin_customer_path(user)) }
+            column(:email)    {|user| "#{user.email}" }
+          end
+        end
+      end
 
+    end # columns
+
+    columns do
+
+      column do
+        panel "Stats" do
+          ul do
+            # li "#{Device.count} devices"
+            li "#{Tracking.count} requests"
+          end
+          hr
+          ul do
+            li "#{User.count} users"
+          end
+        end
+      end
+
+    end # columns
+
+    # Define your dashboard sections here. Each block will be
+    # rendered on the dashboard in the context of the view. So just
+    # return the content which you would like to display.
+
+    # The dashboard is organized in rows and columns, where each row
+    # divides the space for its child columns equally.
+
+    # To start a new row, open a new 'columns' block, and to start a
+    # new column, open a new 'colum' block. That way, you can exactly
+    # define the position for each content div.
+
+    # == Simple Dashboard Column
+    # Here is an example of a simple dashboard column
+    #
+    #   column do
+    #     panel "Recent Posts" do
+    #       content_tag :ul do
+    #         Post.recent(5).collect do |post|
+    #           content_tag(:li, link_to(post.title, admin_post_path(post)))
+    #         end.join.html_safe
+    #       end
+    #     end
+    #   end
+
+    # == Render Partials
+    # The block is rendererd within the context of the view, so you can
+    # easily render a partial rather than build content in ruby.
+    #
+    #   column do
+    #     panel "Recent Posts" do
+    #       render 'recent_posts' # => this will render /app/views/admin/dashboard/_recent_posts.html.erb
+    #     end
+    #   end
+
+  end # content
 end
