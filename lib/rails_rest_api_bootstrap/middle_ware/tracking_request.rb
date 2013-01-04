@@ -28,6 +28,13 @@ module RailsRestApiBootstrap
         status, headers, body = response
         request = ActionDispatch::Request.new(env)
 
+        if status == 401 \
+            || env['action_dispatch.request.parameters'].nil? \
+            || !env['action_dispatch.request.parameters']['controller'].start_with?("api")
+
+          return response
+        end
+
         @tracking = Tracking.new({
           :request      => request.original_fullpath,
           :method       => request.method,
@@ -50,10 +57,7 @@ module RailsRestApiBootstrap
         # Rails.logger.info headers
         # Rails.logger.info request.query_parameters
 
-        unless  @tracking.nil? || @tracking.code == 401 || 
-                env['action_dispatch.request.parameters'].nil? || !env['action_dispatch.request.parameters']['controller'].start_with?("api") 
-          save_tracking(env)
-        end
+        save_tracking(env) unless @tracking.nil?
 
         return response
       end
