@@ -1,0 +1,15 @@
+common: &default_settings
+  key: value
+
+
+development:
+  <<: *default_settings
+
+test:
+  <<: *default_settings
+
+staging:
+  <<: *default_settings
+
+production:
+  <<: *default_settings
