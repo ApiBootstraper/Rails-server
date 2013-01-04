@@ -43,7 +43,7 @@ protected
     # Format status
     status = {
       :code => options[:status][:code] ||= 200,
-      :msg => options[:status][:msg] ||= "OK"
+      :msg  => options[:status][:msg] ||= "OK"
     }
     options[:status] = status[:code]
 

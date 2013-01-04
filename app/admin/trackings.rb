@@ -1,5 +1,5 @@
 ActiveAdmin.register Tracking do
-  menu :priority => 1, :label => "Tracking", :parent => "+"
+  menu :parent => "+"
   actions :index, :show
 
   # Index

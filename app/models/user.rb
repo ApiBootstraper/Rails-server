@@ -22,7 +22,9 @@ class User < ActiveRecord::Base
   validates :password,  :presence => true, :on => :create
 
   # Named Scopes
-  scope :enabled, lambda{ where("is_enable = ?", true) }
+  scope :enabled,  lambda{ where("is_enable = ?", true) }
+  scope :disabled, lambda{ where("is_enable != ?", true) }
+
 
   # API V0.1.0 // Verify Authenticate
   def self.api_v010_is_correct_user?(email, password)

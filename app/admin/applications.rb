@@ -1,4 +1,9 @@
 ActiveAdmin.register Application do
+  menu :parent => "+"
+
+  scope :all, :default => true
+  scope :enabled
+  scope :disabled
 
   # Index
   index do

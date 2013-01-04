@@ -1,6 +1,10 @@
 ActiveAdmin.register User do
-  menu :parent => "Users"
-  
+  menu :priority => 2
+
+  scope :all, :default => true
+  scope :enabled
+  scope :disabled
+
   # Listing view
   index do
     column("UUID")   {|u| link_to "#{u.uuid}", admin_user_path(u) }

@@ -1,4 +1,5 @@
 ActiveAdmin.register_page "Dashboard" do
+  menu :priority => 1
 
   # https://github.com/gregbell/active_admin/issues/72
   content :title => proc{ I18n.t("active_admin.dashboard") } do
@@ -9,7 +10,7 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Recent Todos" do
           # table_for Todo.complete.order('id desc').limit(10) do
           #   column("State")   {|order| status_tag(order.state)                                    } 
-          #   column("Customer"){|order| link_to(order.user.email, admin_customer_path(order.user)) } 
+          #   column("Customer"){|order| link_to(order.user.email, admin_user_path(order.user)) } 
           #   column("Total")   {|order| number_to_currency order.total_price                       } 
           # end
         end
@@ -18,7 +19,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Users" do
           table_for User.order('created_at desc').limit(10).each do |user|
-            column(:username) {|user| link_to(user.id, admin_customer_path(user)) }
+            column(:username) {|user| link_to(user.id, admin_user_path(user)) }
             column(:email)    {|user| "#{user.email}" }
           end
         end

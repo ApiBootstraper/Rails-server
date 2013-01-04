@@ -11,7 +11,8 @@ class Application < ActiveRecord::Base
                     :uniqueness => true
 
   # Named Scopes
-  scope :enabled, lambda{ where("is_enable = ?", true) }
+  scope :enabled,  lambda{ where("is_enable = ?", true) }
+  scope :disabled, lambda{ where("is_enable != ?", true) }
 
 
   def regenerate_app_key!
@@ -20,9 +21,7 @@ class Application < ActiveRecord::Base
     self.save!
   end
 
-  #
   # Enable / Disable entity
-  #
   def enable=(value); self.is_enable = value end
   def enable; self.is_enable end
   def is_enable?; self.is_enable ? true : false end

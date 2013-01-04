@@ -1,5 +1,5 @@
 ActiveAdmin.register AdminUser do
-  menu :parent => "Users"
+  menu :parent => "+"
   # actions :index, :show, :edit, :update, :destroy
 
   # Listing view
