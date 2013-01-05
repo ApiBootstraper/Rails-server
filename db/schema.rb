@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120702205149) do
+ActiveRecord::Schema.define(:version => 20130105163621) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -60,6 +60,19 @@ ActiveRecord::Schema.define(:version => 20120702205149) do
   add_index "applications", ["app_key"], :name => "index_applications_on_app_key"
   add_index "applications", ["is_enable"], :name => "index_applications_on_is_enable"
 
+  create_table "todos", :force => true do |t|
+    t.string   "uuid",            :null => false
+    t.integer  "user_id",         :null => false
+    t.string   "name"
+    t.text     "description"
+    t.datetime "accomplished_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "todos", ["user_id"], :name => "index_todos_on_user_id"
+  add_index "todos", ["uuid"], :name => "index_todos_on_uuid"
+
   create_table "trackings", :force => true do |t|
     t.string   "uuid"
     t.string   "request"
@@ -74,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20120702205149) do
   end
 
   add_index "trackings", ["application_id"], :name => "index_trackings_on_application_id"
+  add_index "trackings", ["uuid"], :name => "index_trackings_on_uuid"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",   :null => false
@@ -103,5 +117,6 @@ ActiveRecord::Schema.define(:version => 20120702205149) do
   add_index "users", ["is_enable"], :name => "index_users_on_is_enable"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+  add_index "users", ["uuid"], :name => "index_users_on_uuid"
 
 end
