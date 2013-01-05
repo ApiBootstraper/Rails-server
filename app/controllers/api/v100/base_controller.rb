@@ -1,4 +1,4 @@
-class Api::V010::BaseController < Api::BaseController
+class Api::V100::BaseController < Api::BaseController
   # Set respond format
   respond_to :xml, :json
 
@@ -41,7 +41,7 @@ protected
 
   def http_authenticate
     authenticate_or_request_with_http_basic("BASIC AUTH") do |email, password|
-      user = User.api_v010_is_correct_user?(email, password)
+      user = User.api_v100_is_correct_user?(email, password)
 
       if user.nil?
         respond_with(nil, :status => {:msg => "Authentication required", :code => 401})
