@@ -1,9 +1,20 @@
 class Api::V100::TodosController < Api::V100::BaseController
 
+  # Get todos of current user
+  # GET /todo/my
+  def show_current_user_todos
+    todos = Todo.where("user_id = ?", current_user.id)
+                .order("updated_at DESC")
+                .page(params[:page])
+    respond_with({:total => todos.total_count, :page => todos.current_page, :todos => @presenter.collection(todos)})
+  end
+
+
   # Create a new Todo
+  # POST /todo
   def create
-    todo = Todo.new(params_filter(params[:todo], [:name]))
-    todo.author = current_user
+    todo = Todo.new(params_filter(params[:todo], [:name, :description]))
+    todo.user = current_user
 
     if todo.save!
       respond_with({:todo => @presenter.single(todo)}, :status => {:msg => "Todo created", :code => 201})
@@ -14,6 +25,7 @@ class Api::V100::TodosController < Api::V100::BaseController
 
 
   # Show Todo
+  # GET /todo/:uuid
   def show
     todo = Todo.find_by_uuid!(params[:uuid])
     respond_with({:todo => @presenter.single(todo)})
@@ -21,24 +33,46 @@ class Api::V100::TodosController < Api::V100::BaseController
 
 
   # Update Todo
+  # PUT /todo/:uuid
   def update
     todo = Todo.find_by_uuid!(params[:uuid])
-    if current_user != todo.author
+    if current_user != todo.user
       respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't update it", :code => 403})
       return
     end
 
-    if todo.update_attributes!(params_filter(params[:todo], [:name]))
+    if todo.update_attributes!(params_filter(params[:todo], [:name, :description]))
       respond_with({:todo => @presenter.single(todo)})
     else
       respond_with(nil, :status => {:msg => "Todo can't be updated", :code => 400})
     end
   end
 
+
+  # Change accomplishment state of a Todo
+  # PUT /todo/:uuid/(check|uncheck)
+  def change_accomplishment
+    todo = Todo.find_by_uuid!(params[:uuid])
+    if current_user != todo.user
+      respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't check it", :code => 403})
+      return
+    end
+
+    todo.accomplished_at = params[:state] === 'check' ? Time.now : nil
+
+    if todo.save!
+      respond_with({:todo => @presenter.single(todo)})
+    else
+      respond_with(nil, :status => {:msg => "Todo can't be updated", :code => 400})
+    end
+  end
+
+
   # Delete Todo
+  # DELETE /todo/:uuid
   def destroy
     todo = Todo.find_by_uuid!(params[:uuid])
-    if current_user != todo.author
+    if current_user != todo.user
       respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't delete it", :code => 403})
       return
     end
