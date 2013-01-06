@@ -58,7 +58,7 @@ class Api::V100::TodosController < Api::V100::BaseController
       return
     end
 
-    todo.accomplished_at = params[:state] === 'check' ? Time.now : nil
+    todo.is_accomplished = params[:state] === 'check' ? true : false
 
     if todo.save!
       respond_with({:todo => @presenter.single(todo)})
