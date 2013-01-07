@@ -16,7 +16,7 @@
 
 ### 1.2: Add attachment(s)
 
-- Attachment ressource (user polymorphism)
+- Attachment ressource (use polymorphism)
 - Link one (or more) attachment to a Todo
 
 
