@@ -1,5 +1,4 @@
 # ApiBootstraper/Rails-server
-========================
 
 This is a bootstrap of Rails application for create an REST API.
 

@@ -26,17 +26,8 @@ class User < ActiveRecord::Base
   scope :disabled, lambda{ where("is_enable != ?", true) }
 
 
-  # API V0.1.0 // Verify Authenticate
-  def self.api_v010_is_correct_user?(email, password)
-    user = self.find_by_email(email.downcase)
-    if user and user.valid_password?(password)
-      return user
-    end
-    return false
-  end
-
-  # API V0.1.1 // Verify Authenticate
-  def self.api_v011_is_correct_user?(email, password)
+  # API V1.0.0 // Verify Authenticate
+  def self.api_v100_is_correct_user?(email, password)
     user = self.find_by_email(email.downcase)
     if user and user.valid_password?(password)
       return user

@@ -2,21 +2,24 @@
 
 ## Api versions
 
-### 1.0: Simple todo list scoped by user
+
+### v1.0: Simple todo list scoped by user
 
 - User ressource
 - Todo ressource
 - Search controller
 
-### 1.1: Add Geolocation
+
+### v1.1: Add Geolocation
 
 - Implement geolocation data
 - Add geolocation search
 - Add mapbox on the admin details view of a Todo
 
-### 1.2: Add attachment(s)
 
-- Attachment ressource (user polymorphism)
+### v1.2: Add attachment(s)
+
+- Attachment ressource (use polymorphism)
 - Link one (or more) attachment to a Todo
 
 
@@ -27,4 +30,4 @@ One branch for Rails3 an one another for Rails4
 
 ## Others
 
-- Call X-API-VERSION 1 == Latest subversion is called
+- Call X-API-VERSION 1 == Latest sub-version is called (so v1.2.0)

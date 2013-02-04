@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-RailsRestApiBootstrap::Application.load_tasks
+ApiBootstraper::Application.load_tasks

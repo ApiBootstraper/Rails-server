@@ -1,11 +1,11 @@
 require 'active_support/configurable'
 
-module RailsRestApiBootstrap
+module ApiBootstraper
 
   class << self
-    # Global settings for RailsRestApiBootstrap
+    # Global settings for ApiBootstraper
     def config
-      @config ||= RailsRestApiBootstrap::Configuration.load
+      @config ||= ApiBootstraper::Configuration.load
     end
   end
 

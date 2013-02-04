@@ -15,9 +15,7 @@ class Api::BaseController < ApplicationController
 
 protected
 
-  #
   # Get the current version
-  #
   def current_version
     v = nil
     v = (self.class.name.split("::").first(2).join("::") + '::VERSION').constantize unless defined?((self.class.name.split("::").first(2).join("::") + '::VERSION').constantize.to_s).nil?
@@ -25,17 +23,13 @@ protected
     return v
   end
 
-  #
   # Instanciate Presenter class if exist
-  #
   def generate_presenter
     @presenter = nil
     @presenter = ((self.class.name.gsub!('Controller', '').singularize + 'Presenter').constantize).new unless defined?((self.class.name.gsub!('Controller', '').singularize + 'Presenter').constantize.to_s).nil?
   end
 
-  #
   # Return a formated response
-  #
   def respond_with(content, *resources)
     options = resources.size == 0 ? {} : resources.extract_options!
     options[:status] = {} if options[:status].nil?
@@ -72,16 +66,12 @@ protected
 
 private
 
-  #
   # Set default response format
-  #
   def set_default_response_format
     request.format = :json unless params[:format]
   end
 
-  #
   # Catch controller exceptions to show a formated message with good format
-  #
   def catch_exceptions
     yield
   rescue ActiveRecord::RecordNotFound
@@ -95,16 +85,12 @@ private
     render_error e.message
   end
 
-  #
   # Render with error message
-  #
   def render_error(msg, code=500)
     respond_with(nil, :status => {:msg => msg, :code => code})
   end
 
-  #
   # Render with not found message
-  #
   def render_record_not_found
     record_name = !controller_name.blank? ? controller_name.singularize.titleize : "Record"
     respond_with(nil, :status => {:msg => "#{record_name} not found", :code => 404})

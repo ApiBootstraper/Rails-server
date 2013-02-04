@@ -1,10 +1,8 @@
-class Api::V010::UsersController < Api::V010::BaseController
+class Api::V100::UsersController < Api::V100::BaseController
   skip_before_filter :authenticate_user!, :only => [:create, :verify_availability]
   skip_before_filter :http_authenticate, :only => [:create, :verify_availability]
 
-  #
   # Create a new user
-  #
   def create
     user = User.new params_filter(params[:user], [:username, :password, :email])
 
@@ -18,24 +16,18 @@ class Api::V010::UsersController < Api::V010::BaseController
     end
   end
 
-  #
   # Show user by UUID
-  #
   def show
     user = User.find_by_uuid!(params[:uuid])
     respond_with({:user => @presenter.single(user)})
   end
 
-  #
   # Show current user
-  #
   def show_current_user
     respond_with({:user => @presenter.single_for_current_user(current_user)})
   end
 
-  #
   # Update current user
-  #
   def update_current_user
     if current_user.update_attributes! params_filter(params[:user], [:password, :email])
       respond_with({:user => @presenter.single_for_current_user(current_user)}, :code => 200)
@@ -44,9 +36,7 @@ class Api::V010::UsersController < Api::V010::BaseController
     end
   end
 
-  #
   # Search users
-  #
   def search
     # TODO verify limit of length
     if params[:q].blank?
@@ -57,9 +47,7 @@ class Api::V010::UsersController < Api::V010::BaseController
     respond_with({:total => users.total_count, :page => users.current_page, :query => params[:q], :users => @presenter.collection(users)})
   end
 
-  #
   # Verify availability
-  #
   def verify_availability
     # TODO verify limit of length
     if params[:username].blank?
@@ -70,5 +58,4 @@ class Api::V010::UsersController < Api::V010::BaseController
     available = user.nil? ? true : false
     respond_with({:username => params[:username], :available => available})
   end
-
 end

@@ -11,11 +11,11 @@ class CreateApplications < ActiveRecord::Migration
     end
     add_index :applications, :app_id
     add_index :applications, :app_key
-    add_index  :applications, :is_enable
+    add_index :applications, :is_enable
 
     change_table :trackings do |t|
-      t.references  :user
-      t.integer     :application_id
+      t.references :user
+      t.integer    :application_id
     end
     add_index :trackings, :application_id
   end
