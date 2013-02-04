@@ -1,4 +1,4 @@
-module RailsRestApiBootstrap
+module ApiBootstraper
   module MiddleWare
     class TrackingRequest
 

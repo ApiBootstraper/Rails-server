@@ -1,7 +1,7 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: rails_rest_api_bootstrap_development
+  database: api_bootstraper_dev
   username: root
   password: 
   host: localhost
@@ -10,7 +10,7 @@ development:
 test:
   adapter: mysql2
   encoding: utf8
-  database: rails_rest_api_bootstrap_test
+  database: api_bootstraper_test
   username: root
   password: 
   host: localhost
@@ -19,7 +19,7 @@ test:
 # development:
 #   adapter: postgresql
 #   encoding: unicode
-#   database: rails_rest_api_bootstrap_development
+#   database: api_bootstraper_dev
 #   pool: 5
 #   username: postgres
 #   password:
@@ -29,7 +29,7 @@ test:
 # test:
 #   adapter: postgresql
 #   encoding: unicode
-#   database: rails_rest_api_bootstrap_test
+#   database: api_bootstraper_test
 #   pool: 20
 #   username: postgres
 #   password:
@@ -39,7 +39,7 @@ test:
 # staging:
 #   adapter: postgresql
 #   encoding: unicode
-#   database: rails_rest_api_bootstrap_staging
+#   database: api_bootstraper_staging
 #   pool: 5
 #   username: postgres
 #   password:
@@ -49,7 +49,7 @@ test:
 # production:
 #   adapter: postgresql
 #   encoding: unicode
-#   database: rails_rest_api_bootstrap_production
+#   database: api_bootstraper
 #   pool: 5
-#   username: rails_rest_api_bootstrap
+#   username: api_bootstraper
 #   password:

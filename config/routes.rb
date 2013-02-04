@@ -1,4 +1,4 @@
-RailsRestApiBootstrap::Application.routes.draw do
+ApiBootstraper::Application.routes.draw do
 
   # ------------------------------------------------------------------------------------------------
   # ApiVersions

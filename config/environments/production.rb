@@ -1,4 +1,4 @@
-RailsRestApiBootstrap::Application.configure do
+ApiBootstraper::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -20,11 +20,7 @@ RailsRestApiBootstrap::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  # Choose the compressors to use
-  config.assets.js_compressor  = :uglifier
-  config.assets.css_compressor = :scss
-
-  # Defaults to Rails.root.join("public/assets")
+  # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
   # Specifies the header that your server uses for sending files
@@ -54,7 +50,6 @@ RailsRestApiBootstrap::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.raise_delivery_errors = true
 
   # Enable threaded mode
   # config.threadsafe!
@@ -65,9 +60,6 @@ RailsRestApiBootstrap::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
-  # Heroku
-  # config.assets.initialize_on_precompile = false
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
