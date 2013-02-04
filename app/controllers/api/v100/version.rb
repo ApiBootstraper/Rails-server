@@ -9,6 +9,6 @@ module Api::V100
 
     def self.to_a; ARRAY end
     def self.to_s; STRING end
-    def self.without_path; [MAJOR, MINOR].compact.join('.').freeze end
+    def self.without_patch; [MAJOR, MINOR].compact.join('.').freeze end
   end
 end
