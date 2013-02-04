@@ -1,6 +1,14 @@
 ActiveAdmin.register Todo do
   menu :priority => 3
 
+  scope :all, :default => true
+  scope :accomplished do |todos|
+    todos.where("accomplished_at IS NOT NULL")
+  end
+  scope :not_accomplished do |todos|
+    todos.where("accomplished_at IS NULL")
+  end
+
   # Listing view
   index do
     column("\#", :sortable => :id)      {|t| link_to "#{t.id}", admin_admin_user_path(t) }
