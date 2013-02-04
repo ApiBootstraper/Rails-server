@@ -1,1 +1,1 @@
-rvm use 1.9.3@api-bootstraper --create
+rvm use 1.9.3@apibootstraper --create
