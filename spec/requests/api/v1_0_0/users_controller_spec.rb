@@ -47,7 +47,7 @@ describe "Api::V1_0_0::UsersController" do
 
   describe "GET /user/my" do
     it "works!" do
-      get "/user/my", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:alice).email, "nic0_pass")}
+      get "/user/my", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:alice).email, "alice_pass")}
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -55,7 +55,7 @@ describe "Api::V1_0_0::UsersController" do
 
       json["response"]["user"]["username"].should       eq(users(:alice).username)
       json["response"]["user"]["email"].should          eq(users(:alice).email)
-      json["response"]["user"]["uuid"].should_not       ed(users(:alice).uuid)
+      json["response"]["user"]["uuid"].should           eq(users(:alice).uuid)
     end
   end
 
@@ -71,7 +71,7 @@ describe "Api::V1_0_0::UsersController" do
 
       json["response"]["user"]["username"].should       eq(users(:bob).username)
       json["response"]["user"]["email"].should          eq("bob2@apibootstraper.com")
-      json["response"]["user"]["uuid"].should_not       ed(users(:bob).uuid)
+      json["response"]["user"]["uuid"].should           eq(users(:bob).uuid)
     end
 
     it "change password works!" do
@@ -84,7 +84,7 @@ describe "Api::V1_0_0::UsersController" do
 
       json["response"]["user"]["username"].should       eq(users(:bob).username)
       json["response"]["user"]["email"].should          eq(users(:bob).email)
-      json["response"]["user"]["uuid"].should_not       ed(users(:bob).uuid)
+      json["response"]["user"]["uuid"].should           eq(users(:bob).uuid)
 
       # Try to connect with new logins
       get "/user/my", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob2_pass")}
@@ -147,7 +147,7 @@ describe "Api::V1_0_0::UsersController" do
 
   describe "GET /user/availability" do
     it "bad request works!" do
-      get "/user/availability", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      get "/user/availability", nil, {"X-Api-Version" => "1.0.0"}
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
@@ -158,7 +158,7 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works for non available username!" do
-      get "/user/availability?username=bob", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      get "/user/availability?username=bob", nil, {"X-Api-Version" => "1.0.0"}
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -169,14 +169,14 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works for available username!" do
-      get "/user/availability?username=alice", nil, {"X-Api-Version" => "1.0.0"}
+      get "/user/availability?username=choubaka", nil, {"X-Api-Version" => "1.0.0"}
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
       json = MultiJson.load(response.body)
 
       json["response"]["available"].should          eq(true)
-      json["response"]["username"].should           eq("alice")
+      json["response"]["username"].should           eq("choubaka")
     end
   end
   
