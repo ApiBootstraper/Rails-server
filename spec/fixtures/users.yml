@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+
+# Password = alice_pass
+alice:
+    uuid: a2794790-7456-012f-3dab-482a1450444f
+    username: alice
+    email: alice@apibootstraper.com
+    encrypted_password: ced17b5d79f3e7fd5b188c9dbfd53d8176e34100f997b5b6a712078e183d600d13aba1b54af4ae2faf8c347864e206eb55c7e37a9a059c42bf8a08b422ecd453
+    password_salt: QHRR5WpsxSSx97PqnsCs
+
+# Password = bob_pass
+bob:
+    uuid: 1fccde10-7457-012f-3dae-482a1450444f
+    username: bob
+    email: bob@apibootstraper.com
+    encrypted_password: 47ce9005d780887f87357303c0335d09988a89377481682bfd60db2c8ef0199e38e9efa41f5c6a4e1b44b72bffe3bacdc4328227bfec2e5a53d691e5177d6d33
+    password_salt: ayLscSB1p4L6pvpxpwKT
+
+# Password = juju_pass
+juliette:
+    uuid: a16a5110-7456-012f-3dab-482a1450444f
+    username: juju
+    email: juliette@apibootstraper.com
+    encrypted_password: 2bd3a40f575036f64055bc5050397348d8fd5bbad6f0bce97599fbea48bfef77f63741e1f36dacd64f0e8b15839d7daadccc0094d9a883280dac9ebf481a4c92
+    password_salt: pQFrBM9pmKAUJyUk9u6S
