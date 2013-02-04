@@ -10,7 +10,7 @@ RailsRestApiBootstrap::Application.routes.draw do
     # V0.1.0
     #
     api_version :module => "V1__0__0",
-                :header => "X-Api-Version", :value => "1.0.0" do
+                :header => {:name => "X-Api-Version", :value => "1.0.0"} do
 
       # Devise Controllers
       devise_for :users, :skip => :all
