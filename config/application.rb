@@ -63,9 +63,9 @@ module ApiBootstraper
     config.assets.version = '1.0'
 
     # Unit test
-    # config.generators do |g|
-    #   g.test_framework :rspec
-    # end
+    config.generators do |g|
+      g.test_framework :rspec
+    end
 
     # Custom middleware
     config.middleware.insert_after("Warden::Manager", "ApiBootstraper::MiddleWare::TrackingRequest")

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Api::V0_1_0::UsersController" do
+describe "Api::V1_0_0::UsersController" do
   include AuthHelper
   fixtures :users
 
@@ -47,15 +47,15 @@ describe "Api::V0_1_0::UsersController" do
 
   describe "GET /user/my" do
     it "works!" do
-      get "/user/my", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:nicolas).email, "nic0_pass")}
+      get "/user/my", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:alice).email, "nic0_pass")}
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
       json = MultiJson.load(response.body)
 
-      json["response"]["user"]["username"].should       eq(users(:nicolas).username)
-      json["response"]["user"]["email"].should          eq(users(:nicolas).email)
-      json["response"]["user"]["uuid"].should_not       ed(users(:nicolas).uuid)
+      json["response"]["user"]["username"].should       eq(users(:alice).username)
+      json["response"]["user"]["email"].should          eq(users(:alice).email)
+      json["response"]["user"]["uuid"].should_not       ed(users(:alice).uuid)
     end
   end
 
@@ -106,15 +106,15 @@ describe "Api::V0_1_0::UsersController" do
     end
 
     it "works!" do
-      get "/user/#{users(:nicolas).uuid}", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      get "/user/#{users(:alice).uuid}", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
       json = MultiJson.load(response.body)
 
       json["response"]["user"]["email"].should      be_nil
-      json["response"]["user"]["uuid"].should       eq(users(:nicolas).uuid)
-      json["response"]["user"]["username"].should   eq(users(:nicolas).username)
+      json["response"]["user"]["uuid"].should       eq(users(:alice).uuid)
+      json["response"]["user"]["username"].should   eq(users(:alice).username)
     end
   end
 
@@ -169,7 +169,7 @@ describe "Api::V0_1_0::UsersController" do
     end
 
     it "works for available username!" do
-      get "/user/availability?username=alice", nil, {"X-Api-Version" => "1.0.0")}
+      get "/user/availability?username=alice", nil, {"X-Api-Version" => "1.0.0"}
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")

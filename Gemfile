@@ -54,9 +54,9 @@ gem 'jquery-rails'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 # If you want use rspec instead of the Tests of ActiveSupport
-# group :test do
-#   gem 'rspec-rails'
-# end
+group :test do
+  gem 'rspec-rails'
+end
 
 group :development do
   gem 'better_errors'

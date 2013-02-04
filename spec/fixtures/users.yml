@@ -6,24 +6,16 @@
 
 # Password = alice_pass
 alice:
-    uuid: a2794790-7456-012f-3dab-482a1450444f
+    uuid: c444e160-5147-0130-8596-482a1450444f
     username: alice
     email: alice@apibootstraper.com
-    encrypted_password: ced17b5d79f3e7fd5b188c9dbfd53d8176e34100f997b5b6a712078e183d600d13aba1b54af4ae2faf8c347864e206eb55c7e37a9a059c42bf8a08b422ecd453
-    password_salt: QHRR5WpsxSSx97PqnsCs
+    encrypted_password: a11717225b1c417ae88d8aeb0d3371ee0936d505aa3f91b78b3058525be5ab1fe9b3d110836010fa77a857d4331e02eb9ac582cc1c3f3ed456fa59d77a4e4064
+    password_salt: KseQ2gsFe2Cub4X3A8Bk
 
 # Password = bob_pass
 bob:
-    uuid: 1fccde10-7457-012f-3dae-482a1450444f
+    uuid: dfe73490-5147-0130-8596-482a1450444f
     username: bob
     email: bob@apibootstraper.com
-    encrypted_password: 47ce9005d780887f87357303c0335d09988a89377481682bfd60db2c8ef0199e38e9efa41f5c6a4e1b44b72bffe3bacdc4328227bfec2e5a53d691e5177d6d33
-    password_salt: ayLscSB1p4L6pvpxpwKT
-
-# Password = juju_pass
-juliette:
-    uuid: a16a5110-7456-012f-3dab-482a1450444f
-    username: juju
-    email: juliette@apibootstraper.com
-    encrypted_password: 2bd3a40f575036f64055bc5050397348d8fd5bbad6f0bce97599fbea48bfef77f63741e1f36dacd64f0e8b15839d7daadccc0094d9a883280dac9ebf481a4c92
-    password_salt: pQFrBM9pmKAUJyUk9u6S
+    encrypted_password: dff426efbac4649e5722b0f1a04f1963506e93ff2c4a35652174d99a2911ee096db3dda987645b5ac347dd9bc6ffa13e956095a027f5f02025fb256e14f44400
+    password_salt: os6hVRpwaWtHMS2p3Zsm
