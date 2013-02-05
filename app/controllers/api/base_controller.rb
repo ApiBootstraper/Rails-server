@@ -1,6 +1,9 @@
 class Api::BaseController < ApplicationController
   session :disabled => true
 
+  # Set respond format
+  respond_to :xml, :json
+
   # Set filters
   skip_before_filter :verify_authenticity_token
   before_filter :set_default_response_format,
