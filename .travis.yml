@@ -5,10 +5,6 @@ language: ruby
 rvm:
 - 1.9.2
 - 1.9.3
-branches:
-  only:
-  - master
-  - heroku
 after_script:
 - git checkout heroku
 - gem install heroku
