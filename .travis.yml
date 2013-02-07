@@ -4,6 +4,11 @@ language: ruby
 rvm:
 - 1.9.2
 - 1.9.3
+branches:
+  only:
+    - master
+    - heroku
+    - rails3
 before_script:
   - mysql -e 'create database api_bootstraper_test'
   - psql -c 'create database api_bootstraper_test' -U postgres
@@ -26,6 +31,5 @@ env:
         Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
 
         Ap/mr/9h1UN3RlYd6t8Edh45BIkh+wqlBk0LsVfl9pLNKCHeOF8='
-    - DB=sqlite
     - DB=mysql
     - DB=postgresql
