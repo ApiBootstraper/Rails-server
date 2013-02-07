@@ -1,5 +1,4 @@
 class Application < ActiveRecord::Base
-
   # Hooks
   before_create :before_create
 

@@ -4,12 +4,15 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :token_authenticatable, :registerable, :encryptable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable, :timeoutable
 
-  # Setup accessible (or protected) attributes for your model
+  # Accessors
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :username, :enable
 
   # Hooks
   before_create :before_create
+
+  # Associations
+  has_many :todos
 
   # Validators
   validates :uuid,      :uniqueness => true
@@ -22,8 +25,8 @@ class User < ActiveRecord::Base
   validates :password,  :presence => true, :on => :create
 
   # Named Scopes
-  scope :enabled,  lambda{ where("is_enable = ?", true) }
-  scope :disabled, lambda{ where("is_enable != ?", true) }
+  scope :enabled,     lambda{ where("is_enable = ?", true) }
+  scope :disabled,    lambda{ where("is_enable != ?", true) }
 
 
   # API V1.0.0 // Verify Authenticate
@@ -52,6 +55,10 @@ class User < ActiveRecord::Base
   def disable!
     self.enable = false
     self.save!
+  end
+
+  def self.total_count
+    offset(nil).limit(nil).count
   end
 
 private
