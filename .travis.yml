@@ -1,10 +1,16 @@
 ---
-script: bundle exec rake travis:build
 bundler_args: --without development production staging
 language: ruby
 rvm:
 - 1.9.2
 - 1.9.3
+before_script:
+  - mysql -e 'create database my_app_test'
+  - psql -c 'create database my_app_test' -U postgres
+script: 
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec spec/
 after_script:
 - git checkout heroku
 - gem install heroku
@@ -15,8 +21,11 @@ after_script:
 - heroku run rake db:migrate --app nameless-forest-4117
 env:
   global:
-  - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
+    - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
 
-      Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
+        Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
 
-      Ap/mr/9h1UN3RlYd6t8Edh45BIkh+wqlBk0LsVfl9pLNKCHeOF8='
+        Ap/mr/9h1UN3RlYd6t8Edh45BIkh+wqlBk0LsVfl9pLNKCHeOF8='
+    - DB=sqlite
+    - DB=mysql
+    - DB=postgresql
