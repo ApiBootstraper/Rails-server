@@ -4,35 +4,38 @@ describe "Api::V1_0_0::UsersController" do
   include AuthHelper
   fixtures :users
 
-  after(:each) do
-    # ActiveRecord::Base.connection.close
+  before(:each) do
+    @headers = {
+      "X-Api-Version" => "1.0.0",
+      "HTTP_ACCEPT"   => "application/json",
+    }
   end
 
   describe "POST /user" do
     it "doesn't create user without username and email" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      post "/user", {:user => {:password => 'demo_fail_pass'}}, {"X-Api-Version" => "1.0.0"}
+      post "/user", {:user => {:password => 'demo_fail_pass'}}, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
     end
 
     it "doesn't create user without username" do
-      post "/user", {:user => {:password => 'demo_fail_pass', :email => 'demo-fail@apibootstraper.com'}}, {"X-Api-Version" => "1.0.0"}
+      post "/user", {:user => {:password => 'demo_fail_pass', :email => 'demo-fail@apibootstraper.com'}}, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
     end
 
     it "doesn't create user without password" do
-      post "/user", {:user => {:username => 'demo_test', :email => 'demo-fail@apibootstraper.com'}}, {"X-Api-Version" => "1.0.0"}
+      post "/user", {:user => {:username => 'demo_test', :email => 'demo-fail@apibootstraper.com'}}, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
     end
 
     it "create user works!" do
-      post "/user", {:user => {:username => 'demo_test', :password => 'demo_test_pass', :email => 'api_unit_test@apibootstraper.com'}}, {"X-Api-Version" => "1.0.0"}
+      post "/user", {:user => {:username => 'demo_test', :password => 'demo_test_pass', :email => 'api_unit_test@apibootstraper.com'}}, @headers
 
       response.status.should              be(201)
       response.content_type.should        eq("application/json")
@@ -47,7 +50,8 @@ describe "Api::V1_0_0::UsersController" do
 
   describe "GET /user/my" do
     it "works!" do
-      get "/user/my", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:alice).email, "alice_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:alice).email, "alice_pass")
+      get "/user/my", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -62,8 +66,8 @@ describe "Api::V1_0_0::UsersController" do
 
   describe "PUT /user/my" do
     it "change email works!" do
-      put "/user/my", {:user => {:email => "bob2@apibootstraper.com"}},
-                      {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      put "/user/my", {:user => {:email => "bob2@apibootstraper.com"}}, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -75,8 +79,8 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "change password works!" do
-      put "/user/my", {:user => {:password => "bob2_pass"}},
-                      {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      put "/user/my", {:user => {:password => "bob2_pass"}}, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -87,7 +91,8 @@ describe "Api::V1_0_0::UsersController" do
       json["response"]["user"]["uuid"].should           eq(users(:bob).uuid)
 
       # Try to connect with new logins
-      get "/user/my", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob2_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob2_pass")
+      get "/user/my", nil, @headers
       response.status.should    be(200)
     end
   end
@@ -95,7 +100,8 @@ describe "Api::V1_0_0::UsersController" do
 
   describe "GET /user/:uuid" do
     it "not found works!" do
-      get "/user/736b2280-58dd-012f-3d2e-482a1450444f", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/736b2280-58dd-012f-3d2e-482a1450444f", nil, @headers
 
       response.status.should              be(404)
       response.content_type.should        eq("application/json")
@@ -106,7 +112,8 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works!" do
-      get "/user/#{users(:alice).uuid}", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/#{users(:alice).uuid}", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -121,7 +128,8 @@ describe "Api::V1_0_0::UsersController" do
 
   describe "GET /user/search" do
     it "bad request works!" do
-      get "/user/search", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/search", nil, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
@@ -132,14 +140,72 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works!" do
-      get "/user/search?q=a", nil, {"X-Api-Version" => "1.0.0", "HTTP_AUTHORIZATION" => encode_credentials(users(:bob).email, "bob_pass")}
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/search?q=ali", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
       json = MultiJson.load(response.body)
 
-      json["response"]["query"].should              eq("a")
-      json["response"]["page"].should               eq(1)
+      json["response"]["query"].should              eq("ali")
+      json["response"]["limit"].should              eq(25)
+      json["response"]["offset"].should             eq(0)
+      json["response"]["total"].should              eq(1)
+    end
+
+    it "works with pagination!" do
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/search?q=ali&page=1", nil, @headers
+
+      response.status.should              be(200)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"]["query"].should              eq("ali")
+      json["response"]["limit"].should              eq(25)
+      json["response"]["offset"].should             eq(0)
+      json["response"]["total"].should              eq(1)
+    end
+
+    it "works with limit!" do
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/search?q=bob&limit=1", nil, @headers
+
+      response.status.should              be(200)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"]["query"].should              eq("bob")
+      json["response"]["limit"].should              eq(1)
+      json["response"]["offset"].should             eq(0)
+      json["response"]["total"].should              eq(1)
+    end
+
+    it "works with offset!" do
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/search?q=ali&offset=1", nil, @headers
+
+      response.status.should              be(200)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"]["query"].should              eq("ali")
+      json["response"]["limit"].should              eq(25)
+      json["response"]["offset"].should             eq(1)
+      json["response"]["total"].should              eq(1)
+    end
+
+    it "works with limit and offset!" do
+      @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
+      get "/user/search?q=bob&limit=2&offset=1", nil, @headers
+
+      response.status.should              be(200)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"]["query"].should              eq("bob")
+      json["response"]["limit"].should              eq(2)
+      json["response"]["offset"].should             eq(1)
       json["response"]["total"].should              eq(1)
     end
   end
@@ -147,7 +213,7 @@ describe "Api::V1_0_0::UsersController" do
 
   describe "GET /user/availability" do
     it "bad request works!" do
-      get "/user/availability", nil, {"X-Api-Version" => "1.0.0"}
+      get "/user/availability", nil, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
@@ -158,7 +224,7 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works for non available username!" do
-      get "/user/availability?username=bob", nil, {"X-Api-Version" => "1.0.0"}
+      get "/user/availability?username=bob", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -169,7 +235,7 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works for available username!" do
-      get "/user/availability?username=choubaka", nil, {"X-Api-Version" => "1.0.0"}
+      get "/user/availability?username=choubaka", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
