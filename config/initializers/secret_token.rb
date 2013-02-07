@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-RailsRestApiBootstrap::Application.config.secret_token = '0b39734ab6f00a3fedec8086690548a4e0dff1120a26c52aa05b903c53d0cd34c4edcb39eaf150d17d6295c8850018f982aefccc734e0fdb611855e9a0207451'
+ApiBootstraper::Application.config.secret_token = '647d9fda8855f5ccec9614e1140acb54006a67c0c8bc33aec1f964081e4a0548e0da1b7100b5776fec4344bcc6ed40ae0dd5d21943000bcb2432b62e2ee3048b'

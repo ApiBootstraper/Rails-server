@@ -3,7 +3,7 @@ class Tracking < ActiveRecord::Base
   belongs_to :user
   belongs_to :application
 
-  # accessors
+  # Accessors
   attr_accessible :uuid, :request, :method, :remote_ip, :version, :code, :request,
                   :application, :user
 
