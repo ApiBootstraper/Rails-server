@@ -15,11 +15,8 @@ gem 'session_off'
 gem 'activeadmin'
 gem 'cancan'
 
-gem 'kaminari'
-
-# Database searcg gems
-# gem 'meta_search'
-# gem 'texticle', "2.0", :require => 'texticle/rails' # Only for PgSQL DB
+# Database search gems
+gem 'meta_search'
 
 # Famous APM - http://newrelic.com/
 # gem 'newrelic_rpm'
@@ -82,6 +79,7 @@ if File.exist?(database_file)
       when /postgresql/
         gem "pg", ">= 0.11.0", :platforms => [:mri, :mingw]
         gem "activerecord-jdbcpostgresql-adapter", :platforms => :jruby
+        # gem 'texticle', "2.0", :require => 'texticle/rails', :platforms => ?
       when /sqlite3/
         gem "sqlite3", :platforms => [:mri, :mingw]
         gem "activerecord-jdbcsqlite3-adapter", :platforms => :jruby
