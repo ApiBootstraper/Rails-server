@@ -15,10 +15,10 @@ after_script:
 - git checkout heroku
 - gem install heroku
 - yes | ruby travis_deployer.rb
-- heroku keys:clear
 - yes | heroku keys:add
 - git push heroku heroku:master
 - heroku run rake db:migrate --app nameless-forest-4117
+- heroku keys:remove travis@
 env:
   global:
     - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
