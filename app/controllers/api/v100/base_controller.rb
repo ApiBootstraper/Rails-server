@@ -33,26 +33,18 @@ protected
   # Before Filter for format
   #
   def verif_format
-    formats = ["json", "xml"]
-    unless formats.include? params[:format]
-      raise ActionController::RoutingError.new("Invalid format")
-    end
+    raise ActionController::RoutingError.new("Invalid format") unless ["json", "xml"].include? params[:format]
   end
 
   def http_authenticate
     authenticate_or_request_with_http_basic("BASIC AUTH") do |email, password|
       user = User.api_v100_is_correct_user?(email, password)
 
-      if user.nil?
-        respond_with(nil, :status => {:msg => "Authentication required", :code => 401})
-        return
-      else
-        set_current_user(user)
-      end
+      return respond_with(nil, :status => {:msg => "Authentication required", :code => 401}) if user.nil?
+      set_current_user(user)
     end
 
   rescue Exception
-    respond_with(nil, :status => {:msg => "Authentication required", :code => 401})
-    return
+    return respond_with(nil, :status => {:msg => "Authentication required", :code => 401})
   end
 end

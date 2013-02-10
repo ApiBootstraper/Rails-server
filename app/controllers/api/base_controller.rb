@@ -109,7 +109,7 @@ private
   rescue Exception => e
     Rails.logger.debug e.inspect
     Rails.logger.debug e.message.inspect
-    e.backtrace.each { |l| Rails.logger.debug l.inspect }
+    e.backtrace.each {|l| Rails.logger.debug l.inspect }
     render_error e.message
   end
 
