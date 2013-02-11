@@ -41,6 +41,8 @@ protected
       user = User.api_v100_is_correct_user?(email, password)
 
       return respond_with(nil, :status => {:msg => "Authentication required", :code => 401}) if user.nil?
+
+      @presenter.set_current_user = user unless @presenter.nil?
       set_current_user(user)
     end
 
