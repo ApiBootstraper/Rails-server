@@ -8,7 +8,6 @@ class Api::V100::UsersController < Api::V100::BaseController
     user = User.new params_filter(params[:user], [:username, :password, :email])
 
     if user.save!
-      # Tell the UserMailer to send a welcome Email after save
       UserMailer.welcome_email(user).deliver
       return respond_with({:user => @presenter.single_for_current_user(user)}, :status => {:msg => "User created", :code => 201})
     end

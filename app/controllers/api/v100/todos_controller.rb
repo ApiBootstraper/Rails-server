@@ -1,17 +1,5 @@
 class Api::V100::TodosController < Api::V100::BaseController
 
-  # Get todos of current user
-  # GET /todo/my
-  def show_current_user_todos
-    offset, limit = api_offset_and_limit
-    todos = Todo.where("user_id = ?", current_user.id)
-                .order("updated_at DESC")
-                .offset(offset).limit(limit)
-
-    respond_with({:total => todos.total_count, :limit => limit, :offset => offset, :todos => @presenter.collection(todos)})
-  end
-
-
   # Create a new Todo
   # POST /todo
   def create
@@ -24,7 +12,6 @@ class Api::V100::TodosController < Api::V100::BaseController
     respond_with({:errors => todo.errors}, :status => {:msg => "Todo can't be created", :code => 400})
   end
 
-
   # Show Todo
   # GET /todo/:uuid
   def show
@@ -32,6 +19,16 @@ class Api::V100::TodosController < Api::V100::BaseController
     respond_with({:todo => @presenter.single(todo)})
   end
 
+  # Get todos of current user
+  # GET /todo/my
+  def show_current_user_todos
+    offset, limit = api_offset_and_limit
+    todos = Todo.where("user_id = ?", current_user.id)
+                .order("updated_at DESC")
+                .offset(offset).limit(limit)
+
+    respond_with({:total => todos.total_count, :limit => limit, :offset => offset, :todos => @presenter.collection(todos)})
+  end
 
   # Update Todo
   # PUT /todo/:uuid
@@ -44,7 +41,6 @@ class Api::V100::TodosController < Api::V100::BaseController
     end
     respond_with(nil, :status => {:msg => "Todo can't be updated", :code => 400})
   end
-
 
   # Change accomplishment state of a Todo
   # PUT /todo/:uuid/(check|uncheck)
@@ -61,7 +57,6 @@ class Api::V100::TodosController < Api::V100::BaseController
     end
   end
 
-
   # Delete Todo
   # DELETE /todo/:uuid
   def destroy
@@ -73,7 +68,6 @@ class Api::V100::TodosController < Api::V100::BaseController
     end
     respond_with(nil, :status => {:msg => "Todo can't be deleted", :code => 400})
   end
-
 
   # Search Todos
   # GET /todo/search?q=

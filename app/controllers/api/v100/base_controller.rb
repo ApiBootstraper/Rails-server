@@ -18,9 +18,7 @@ protected
     env['warden'].set_user(user, :store => false)
   end
 
-  #
   # Params filter
-  #
   def params_filter params, filters
     return params unless filters.kind_of?(Array)
     return params unless params.kind_of?(Hash)
@@ -29,9 +27,7 @@ protected
     return res
   end
 
-  #
   # Before Filter for format
-  #
   def verif_format
     raise ActionController::RoutingError.new("Invalid format") unless ["json", "xml"].include? params[:format]
   end

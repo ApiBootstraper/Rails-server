@@ -18,6 +18,7 @@ module ApiBootstraper
       #
       def before_call(env)
         start = Time.now
+        # TODO replace TrackingObject by Tracking ...
         env['tracking'] = TrackingObject.new
       end
 
