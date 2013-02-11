@@ -51,7 +51,7 @@ protected
       set_current_user(user)
     end
 
-  rescue Exception
-    return respond_with(nil, :status => {:msg => "Authentication required", :code => 401})
+  # rescue Exception
+  #   return respond_with(nil, :status => {:msg => "Authentication required", :code => 401})
   end
 end

@@ -3,7 +3,7 @@ class Api::V100::UsersController < Api::V100::BaseController
   skip_before_filter :http_authenticate, :only => [:create, :verify_availability]
 
   # Create a new user
-  # POST /user
+  # POST /users
   def create
     user = User.new params_filter(params[:user], [:username, :password, :email])
 
@@ -15,21 +15,21 @@ class Api::V100::UsersController < Api::V100::BaseController
   end
 
   # Show user by UUID
-  # GET /user/:uuid
+  # GET /users/:uuid
   def show
     user = User.enabled.includes(:todos).find_by_uuid!(params[:uuid])
     respond_with({:user => @presenter.single(user)})
   end
 
   # Show current user
-  # GET /user/my
+  # GET /users/my
   def show_current_user
     user = User.includes(:todos).find(current_user.id)
     respond_with({:user => @presenter.single_for_current_user(user)})
   end
 
   # Update current user
-  # PUT /user/my
+  # PUT /users/my
   def update_current_user
     if current_user.update_attributes! params_filter(params[:user], [:password, :email])
       return respond_with({:user => @presenter.single_for_current_user(current_user)}, :code => 200)
@@ -38,7 +38,7 @@ class Api::V100::UsersController < Api::V100::BaseController
   end
 
   # Search users
-  # GET /user/search?q=
+  # GET /users/search?q=
   def search
     return respond_with(nil, :status => {:msg => "Query can't be blank", :code => 400})     if params[:q].blank?
     return respond_with(nil, :status => {:msg => "Query length must be > 3", :code => 400}) if params[:q].length < 3
@@ -53,7 +53,7 @@ class Api::V100::UsersController < Api::V100::BaseController
   end
 
   # Verify availability
-  # GET /user/availability?username=
+  # GET /users/availability?username=
   def verify_availability
     return respond_with(nil, :status => {:msg => "Username can't be blank", :code => 400})  if params[:username].blank?
     return respond_with(nil, :status => {:msg => "Query length must be > 3", :code => 400}) if params[:username].length < 3

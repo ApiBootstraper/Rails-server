@@ -1,7 +1,7 @@
 class Api::V100::TodosController < Api::V100::BaseController
 
   # Create a new Todo
-  # POST /todo
+  # POST /todos
   def create
     todo = Todo.new(params_filter(params[:todo], [:name, :description]))
     todo.user = current_user
@@ -13,14 +13,14 @@ class Api::V100::TodosController < Api::V100::BaseController
   end
 
   # Show Todo
-  # GET /todo/:uuid
+  # GET /todos/:uuid
   def show
     todo = Todo.find_by_uuid!(params[:uuid])
     respond_with({:todo => @presenter.single(todo)})
   end
 
   # Get todos of current user
-  # GET /todo/my
+  # GET /todos/my
   def show_current_user_todos
     offset, limit = api_offset_and_limit
     todos = Todo.where("user_id = ?", current_user.id)
@@ -31,7 +31,7 @@ class Api::V100::TodosController < Api::V100::BaseController
   end
 
   # Update Todo
-  # PUT /todo/:uuid
+  # PUT /todos/:uuid
   def update
     todo = Todo.find_by_uuid!(params[:uuid])
     return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't update it", :code => 403}) if current_user != todo.user
@@ -43,7 +43,7 @@ class Api::V100::TodosController < Api::V100::BaseController
   end
 
   # Change accomplishment state of a Todo
-  # PUT /todo/:uuid/(check|uncheck)
+  # PUT /todos/:uuid/(check|uncheck)
   def change_accomplishment
     todo = Todo.find_by_uuid!(params[:uuid])
     return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't check it", :code => 403}) if current_user != todo.user
@@ -58,7 +58,7 @@ class Api::V100::TodosController < Api::V100::BaseController
   end
 
   # Delete Todo
-  # DELETE /todo/:uuid
+  # DELETE /todos/:uuid
   def destroy
     todo = Todo.find_by_uuid!(params[:uuid])
     return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't delete it", :code => 403}) if current_user != todo.user
@@ -70,7 +70,7 @@ class Api::V100::TodosController < Api::V100::BaseController
   end
 
   # Search Todos
-  # GET /todo/search?q=
+  # GET /todos/search?q=
   def search
     return respond_with(nil, :status => {:msg => "Query can't be blank", :code => 400})     if params[:q].blank?
     return respond_with(nil, :status => {:msg => "Query length must be > 3", :code => 400}) if params[:q].length < 3
