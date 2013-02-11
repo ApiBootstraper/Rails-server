@@ -11,31 +11,31 @@ describe "Api::V1_0_0::UsersController" do
     }
   end
 
-  describe "POST /user" do
+  describe "POST /users" do
     it "doesn't create user without username and email" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      post "/user", {:user => {:password => 'demo_fail_pass'}}, @headers
+      post "/users", {:user => {:password => 'demo_fail_pass'}}, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
     end
 
     it "doesn't create user without username" do
-      post "/user", {:user => {:password => 'demo_fail_pass', :email => 'demo-fail@apibootstraper.com'}}, @headers
+      post "/users", {:user => {:password => 'demo_fail_pass', :email => 'demo-fail@apibootstraper.com'}}, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
     end
 
     it "doesn't create user without password" do
-      post "/user", {:user => {:username => 'demo_test', :email => 'demo-fail@apibootstraper.com'}}, @headers
+      post "/users", {:user => {:username => 'demo_test', :email => 'demo-fail@apibootstraper.com'}}, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
     end
 
     it "create user works!" do
-      post "/user", {:user => {:username => 'demo_test', :password => 'demo_test_pass', :email => 'api_unit_test@apibootstraper.com'}}, @headers
+      post "/users", {:user => {:username => 'demo_test', :password => 'demo_test_pass', :email => 'api_unit_test@apibootstraper.com'}}, @headers
 
       response.status.should              be(201)
       response.content_type.should        eq("application/json")
@@ -48,10 +48,10 @@ describe "Api::V1_0_0::UsersController" do
   end
 
 
-  describe "GET /user/my" do
+  describe "GET /users/my" do
     it "works!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:alice).email, "alice_pass")
-      get "/user/my", nil, @headers
+      get "/users/my", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -64,10 +64,10 @@ describe "Api::V1_0_0::UsersController" do
   end
 
 
-  describe "PUT /user/my" do
+  describe "PUT /users/my" do
     it "change email works!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      put "/user/my", {:user => {:email => "bob2@apibootstraper.com"}}, @headers
+      put "/users/my", {:user => {:email => "bob2@apibootstraper.com"}}, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -80,7 +80,7 @@ describe "Api::V1_0_0::UsersController" do
 
     it "change password works!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      put "/user/my", {:user => {:password => "bob2_pass"}}, @headers
+      put "/users/my", {:user => {:password => "bob2_pass"}}, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -92,16 +92,16 @@ describe "Api::V1_0_0::UsersController" do
 
       # Try to connect with new logins
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob2_pass")
-      get "/user/my", nil, @headers
+      get "/users/my", nil, @headers
       response.status.should    be(200)
     end
   end
 
 
-  describe "GET /user/:uuid" do
+  describe "GET /users/:uuid" do
     it "not found works!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/736b2280-58dd-012f-3d2e-482a1450444f", nil, @headers
+      get "/users/736b2280-58dd-012f-3d2e-482a1450444f", nil, @headers
 
       response.status.should              be(404)
       response.content_type.should        eq("application/json")
@@ -113,7 +113,7 @@ describe "Api::V1_0_0::UsersController" do
 
     it "works!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/#{users(:alice).uuid}", nil, @headers
+      get "/users/#{users(:alice).uuid}", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -126,10 +126,10 @@ describe "Api::V1_0_0::UsersController" do
   end
 
 
-  describe "GET /user/search" do
+  describe "GET /users/search" do
     it "bad request works!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/search", nil, @headers
+      get "/users/search", nil, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
@@ -141,7 +141,7 @@ describe "Api::V1_0_0::UsersController" do
 
     it "works!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/search?q=ali", nil, @headers
+      get "/users/search?q=ali", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -155,7 +155,7 @@ describe "Api::V1_0_0::UsersController" do
 
     it "works with pagination!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/search?q=ali&page=1", nil, @headers
+      get "/users/search?q=ali&page=1", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -169,7 +169,7 @@ describe "Api::V1_0_0::UsersController" do
 
     it "works with limit!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/search?q=bob&limit=1", nil, @headers
+      get "/users/search?q=bob&limit=1", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -183,7 +183,7 @@ describe "Api::V1_0_0::UsersController" do
 
     it "works with offset!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/search?q=ali&offset=1", nil, @headers
+      get "/users/search?q=ali&offset=1", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -197,7 +197,7 @@ describe "Api::V1_0_0::UsersController" do
 
     it "works with limit and offset!" do
       @headers["HTTP_AUTHORIZATION"] = encode_credentials(users(:bob).email, "bob_pass")
-      get "/user/search?q=bob&limit=2&offset=1", nil, @headers
+      get "/users/search?q=bob&limit=2&offset=1", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -211,9 +211,9 @@ describe "Api::V1_0_0::UsersController" do
   end
 
 
-  describe "GET /user/availability" do
+  describe "GET /users/availability" do
     it "bad request works!" do
-      get "/user/availability", nil, @headers
+      get "/users/availability", nil, @headers
 
       response.status.should              be(400)
       response.content_type.should        eq("application/json")
@@ -224,7 +224,7 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works for non available username!" do
-      get "/user/availability?username=bob", nil, @headers
+      get "/users/availability?username=bob", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
@@ -235,7 +235,7 @@ describe "Api::V1_0_0::UsersController" do
     end
 
     it "works for available username!" do
-      get "/user/availability?username=choubaka", nil, @headers
+      get "/users/availability?username=choubaka", nil, @headers
 
       response.status.should              be(200)
       response.content_type.should        eq("application/json")
