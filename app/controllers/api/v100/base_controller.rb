@@ -3,7 +3,8 @@ class Api::V100::BaseController < Api::BaseController
   respond_to :xml, :json
 
   # Set Filters
-  before_filter :http_authenticate,
+  before_filter :verify_application,
+                :http_authenticate,
                 :verif_format
 
 protected
@@ -30,6 +31,14 @@ protected
   # Before Filter for format
   def verif_format
     raise ActionController::RoutingError.new("Invalid format") unless ["json", "xml"].include? params[:format]
+  end
+
+  # Verify if application exists
+  def verify_application
+    # Verify Header
+    env['tracking'].application = Application.enabled.find_by_app_id(request.headers["X-App-ID"])
+
+    return respond_with(nil, :status => {:msg => "Invalid App-ID", :code => 405}) unless env['tracking'].application
   end
 
   def http_authenticate
