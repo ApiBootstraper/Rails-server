@@ -19,10 +19,10 @@ ActiveAdmin.register User do
   # Form view
   form do |f|
     f.inputs do
-      f.input :email,     :as => :string
-      f.input :username,  :as => :string
-      f.input :password,  :as => :string
-      f.input :enable,    :as => :boolean, :label => "Activate"
+      f.input :email,    :as => :string
+      f.input :username, :as => :string
+      f.input :password, :as => :string
+      f.input :enable,   :as => :boolean, :label => "Activate"
     end
     f.buttons
   end

@@ -14,8 +14,8 @@ ActiveAdmin.register AdminUser do
   # Form view
   form do |f|
     f.inputs do
-      f.input :email,       :as => :string
-      f.input :password,    :as => :password
+      f.input :email,    :as => :string
+      f.input :password, :as => :password
     end
     f.buttons
   end

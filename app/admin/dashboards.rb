@@ -8,11 +8,11 @@ ActiveAdmin.register_page "Dashboard" do
 
       column do
         panel "Recent Todos" do
-          # table_for Todo.complete.order('id desc').limit(10) do
-          #   column("State")   {|order| status_tag(order.state)                                    } 
-          #   column("Customer"){|order| link_to(order.user.email, admin_user_path(order.user)) } 
-          #   column("Total")   {|order| number_to_currency order.total_price                       } 
-          # end
+          table_for Todo.order('id desc').limit(10) do
+            column("UUID")  {|t| link_to raw("<code>#{t.uuid[0,8]}...</code>"), admin_tracking_path(t), :title => t.uuid }
+            column :name
+            column("User")  {|t| link_to "#{t.user.username}", admin_user_path(t.user) }
+          end
         end
       end
 
@@ -32,12 +32,13 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Stats" do
           ul do
-            # li "#{Device.count} devices"
+            li "#{Application.count} applications"
             li "#{Tracking.count} requests"
           end
           hr
           ul do
             li "#{User.count} users"
+            li "#{Todo.count} todos"
           end
         end
       end
