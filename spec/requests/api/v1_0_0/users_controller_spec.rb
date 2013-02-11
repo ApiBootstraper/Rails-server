@@ -2,11 +2,12 @@ require 'spec_helper'
 
 describe "Api::V1_0_0::UsersController" do
   include AuthHelper
-  fixtures :users
+  fixtures :applications, :users
 
   before(:each) do
     @headers = {
       "X-Api-Version" => "1.0.0",
+      "X-App-ID"      => applications(:android).app_id,
       "HTTP_ACCEPT"   => "application/json",
     }
   end
@@ -245,5 +246,4 @@ describe "Api::V1_0_0::UsersController" do
       json["response"]["username"].should           eq("choubaka")
     end
   end
-  
 end
