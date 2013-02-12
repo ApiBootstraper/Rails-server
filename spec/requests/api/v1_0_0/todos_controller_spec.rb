@@ -36,16 +36,16 @@ describe "Api::V1_0_0::UsersController" do
   end
 
 
-  describe "GET /todos/:uuid"
+  describe "GET /todos/:uuid" do
 
   end
 
 
-  describe "GET /todos/my"
+  describe "GET /todos/my" do
 
   end
 
-  describe "PUT /todos/:uuid"
+  describe "PUT /todos/:uuid" do
 
   end
 end
