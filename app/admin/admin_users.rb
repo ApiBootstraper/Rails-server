@@ -1,6 +1,10 @@
 ActiveAdmin.register AdminUser do
+
   menu :parent => "+"
   # actions :index, :show, :edit, :update, :destroy
+
+  # Batch actions
+  batch_action :destroy, false
 
   # Listing view
   index do
