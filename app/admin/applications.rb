@@ -13,12 +13,19 @@ ActiveAdmin.register Application do
   end
   batch_action :destroy, false
 
+  # Custom actions
+  member_action :generate_token, :method => :put do
+    application = Application.find(params[:id])
+    application.regenerate_app_key!
+    redirect_to :action => :show, :notice => "App Key regenerated!"
+  end
+
   # Scopes
   scope :all, :default => true
   scope :enabled
   scope :disabled
 
-  # Index
+  # Index view
   index do
     selectable_column
     column("Name", :ordering => :name) {|a| link_to "#{a.name}", admin_application_path(a) }
@@ -42,13 +49,6 @@ ActiveAdmin.register Application do
 
   action_item :only => [:show, :edit] do
     link_to "Regenerate App Key", generate_token_admin_application_path, :confirm => "Are you sure?", :method => :put
-  end
-
-  # Custom actions
-  member_action :generate_token, :method => :put do
-    application = Application.find(params[:id])
-    application.regenerate_app_key!
-    redirect_to :action => :show, :notice => "App Key regenerated!"
   end
 
 end

@@ -18,7 +18,7 @@ ActiveAdmin.register Tracking do
   filter :created_at
   filter :updated_at
 
-  # Index
+  # Index view
   index do
     column("UUID")  {|t| link_to "#{t.uuid[0,7]}...", admin_tracking_path(t), :title => t.uuid }
     column :request

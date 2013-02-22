@@ -28,7 +28,7 @@ ActiveAdmin.register Todo do
     todos.where("accomplished_at IS NULL")
   end
 
-  # Listing view
+  # Index view
   index do
     selectable_column
     column("\#", :sortable => :id)     {|t| link_to "#{t.id}", admin_admin_user_path(t) }

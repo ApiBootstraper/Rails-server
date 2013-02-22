@@ -1,7 +1,7 @@
 class ActiveAdminOverrideFooter < ActiveAdmin::Component
   def build
     super(id: "footer")
-    para "Copyright &copy; #{Date.today.year.to_s} #{link_to('ApiBootstraper', 'http://apibootstraper.com')} &mdash; Powered by #{link_to('Active Admin', 'http://www.activeadmin.info')} #{ActiveAdmin::VERSION}".html_safe
+    para "Copyright &copy; #{Date.today.year.to_s} #{link_to(ApiBootstraper::Info.name, ApiBootstraper::Info.url)} v#{ApiBootstraper::Info.version} &mdash; Powered by #{link_to('Active Admin', 'http://www.activeadmin.info')} #{ActiveAdmin::VERSION}".html_safe
   end
 end
 

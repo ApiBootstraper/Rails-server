@@ -6,7 +6,7 @@ ActiveAdmin.register AdminUser do
   # Batch actions
   batch_action :destroy, false
 
-  # Listing view
+  # Index view
   index do
     column("\#", :sortable => :id)      {|u| link_to "#{u.id}", admin_admin_user_path(u) }
     column("Name", :sortable => :name)  {|u| link_to "#{u.email}", admin_admin_user_path(u) }

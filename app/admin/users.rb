@@ -18,7 +18,20 @@ ActiveAdmin.register User do
   scope :enabled
   scope :disabled
 
-  # Listing view
+  # Fitlers
+  filter :email
+  filter :username
+  filter :is_enable
+  filter :enabled_at
+  filter :current_sign_in_ip
+  filter :last_sign_in_ip
+  filter :created_at
+  filter :updated_at
+  filter :reset_password_send_at
+  filter :remember_created_at
+  filter :sign_in_at
+
+  # Index view
   index do
     selectable_column
     column("UUID")   {|u| link_to "#{u.uuid}", admin_user_path(u) }
