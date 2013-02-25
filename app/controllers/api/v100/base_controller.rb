@@ -38,7 +38,7 @@ protected
     # Verify Header
     env['tracking'].application = Application.enabled.find_by_app_id(request.headers["X-App-ID"])
 
-    return respond_with(nil, :status => {:msg => "Invalid App-ID", :code => 405}) unless env['tracking'].application
+    return respond_with(nil, :status => {:msg => "Invalid App-ID", :code => 403}) unless env['tracking'].application
   end
 
   def http_authenticate
