@@ -1,4 +1,4 @@
-# ApiBootstraper/Rails-server
+# [ApiBootstraper/Rails-server](http://apibootstraper.github.com/apps/rails-server) [![Build Status](https://travis-ci.org/ApiBootstraper/Rails-server.png?branch=rails3)](https://travis-ci.org/ApiBootstraper/Rails-server) [![Dependency Status](https://gemnasium.com/ApiBootstraper/Rails-server.png)](https://gemnasium.com/ApiBootstraper/Rails-server) [![Code Climate](https://codeclimate.com/github/ApiBootstraper/Rails-server.png)](https://codeclimate.com/github/ApiBootstraper/Rails-server)
 
 This is a bootstrap of Rails application for create an REST API.
 
@@ -16,3 +16,8 @@ Some table are prepared :
 - Tracking (save all request do to the API)
 - Application
 
+
+
+## License
+
+ApiBootstraper Rails-server is released under the [MIT License](http://www.opensource.org/licenses/MIT).

@@ -1,8 +1,12 @@
 ActiveAdmin.register AdminUser do
+
   menu :parent => "+"
   # actions :index, :show, :edit, :update, :destroy
 
-  # Listing view
+  # Batch actions
+  batch_action :destroy, false
+
+  # Index view
   index do
     column("\#", :sortable => :id)      {|u| link_to "#{u.id}", admin_admin_user_path(u) }
     column("Name", :sortable => :name)  {|u| link_to "#{u.email}", admin_admin_user_path(u) }
@@ -14,10 +18,12 @@ ActiveAdmin.register AdminUser do
   # Form view
   form do |f|
     f.inputs do
-      f.input :email,       :as => :string
-      f.input :password,    :as => :password
+      f.input :email,    :as => :string
+      f.input :password, :as => :password
     end
     f.buttons
   end
+
+  # TODO: Custom details view
 
 end

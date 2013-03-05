@@ -36,23 +36,24 @@ protected
   # for an API response based on offset, limit and page parameters
   # (See: https://github.com/redmine/redmine/blob/2.2-stable/app/controllers/application_controller.rb#L470)
   def api_offset_and_limit(options=params)
+    offset = 0
+
     if options[:offset].present?
       offset = options[:offset].to_i
-      if offset < 0
-        offset = 0
-      end
+      offset = 0 if offset < 0
     end
+
     limit = options[:limit].to_i
     if limit < 1
       limit = 25
     elsif limit > 100
       limit = 100
     end
+
     if offset.nil? && options[:page].present?
       offset = (options[:page].to_i - 1) * limit
       offset = 0 if offset < 0
     end
-    offset ||= 0
 
     [offset, limit]
   end
@@ -65,7 +66,7 @@ protected
     # Format status
     status = {
       :code => options[:status][:code] ||= 200,
-      :msg  => options[:status][:msg] ||= "OK"
+      :msg  => options[:status][:msg]  ||= "OK"
     }
     options[:status] = status[:code]
 
@@ -75,18 +76,18 @@ protected
         :header => {
           :version => current_version.to_s,
           :status => status,
-          # :time => Time.now.utc,
           :request => request.original_fullpath, # escape or stripslahes or sanitize
         },
         :response => content
       }
 
-      content[:header].merge!({:env => Rails.env}) unless Rails.env.production? # If env is not production, return current env
+      # If env is not production, return current env
+      content[:header].merge!({:env => Rails.env}) unless Rails.env.production?
     end
 
     # Bug fix
     if request.method != 'GET'
-      options[:location] = options[:location] || nil
+      options[:location] ||= nil
     end
 
     super(content, options)
@@ -109,7 +110,7 @@ private
   rescue Exception => e
     Rails.logger.debug e.inspect
     Rails.logger.debug e.message.inspect
-    e.backtrace.each { |l| Rails.logger.debug l.inspect }
+    e.backtrace.each {|l| Rails.logger.debug l.inspect }
     render_error e.message
   end
 

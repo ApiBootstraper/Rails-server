@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+
+android:
+    name: "Android application"
+    app_id: S7uOj1GRCZkmYeVF
+    app_key: zPnFTkDH5Pwf8nv9DK4et3yTfyUASh37
+    is_enable: true
+
+ios:
+    name: "iOS application"
+    app_id: lDNzI2lrZiG50vFi
+    app_key: OK41NwDWAVykZSL2MhlXUpOHQUrA1WO1
+    is_enable: true
+
+disabled:
+    name: "Disabled application"
+    app_id: zq52gS28drakQ3kG
+    app_key: i9lZxvpqzGzPHizsUAPdZiDMIw45LQNs
+    is_enable: false
