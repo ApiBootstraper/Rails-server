@@ -1,7 +1,7 @@
 File.open(".git/config", "a") do |f|
   f.puts <<-EOF
 [remote "heroku"]
-    url = url = git@heroku.com:hamburg-on-ruby.git
+    url = url = git@heroku.com:nameless-forest-4117.git
     fetch = +refs/heads/*:refs/remotes/heroku/* # had to change this into remote name instead of app name
 EOF
 end

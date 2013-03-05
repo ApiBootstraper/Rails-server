@@ -1,6 +1,6 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -30,6 +30,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
+  gem 'coffee-script-source', '~> 1.4.0' # ActiveAdmin patch
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -65,6 +66,7 @@ end
 # configuration file
 # (Found on redmine.org Gemfile)
 require 'erb'
+require 'yaml'
 database_file = File.join(File.dirname(__FILE__), "config/database.yml")
 if File.exist?(database_file)
   database_config = YAML::load(ERB.new(IO.read(database_file)).result)
@@ -80,9 +82,6 @@ if File.exist?(database_file)
         gem "pg", ">= 0.11.0", :platforms => [:mri, :mingw]
         gem "activerecord-jdbcpostgresql-adapter", :platforms => :jruby
         # gem 'texticle', "2.0", :require => 'texticle/rails', :platforms => ?
-      when /sqlite3/
-        gem "sqlite3", :platforms => [:mri, :mingw]
-        gem "activerecord-jdbcsqlite3-adapter", :platforms => :jruby
       when /sqlserver/
         gem "tiny_tds", "~> 0.5.1", :platforms => [:mri, :mingw]
         gem "activerecord-sqlserver-adapter", :platforms => [:mri, :mingw]
