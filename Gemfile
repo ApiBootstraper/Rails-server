@@ -30,6 +30,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
+  gem 'coffee-script-source', '~> 1.4.0' # ActiveAdmin patch
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -65,6 +66,7 @@ end
 # configuration file
 # (Found on redmine.org Gemfile)
 require 'erb'
+require 'yaml'
 database_file = File.join(File.dirname(__FILE__), "config/database.yml")
 if File.exist?(database_file)
   database_config = YAML::load(ERB.new(IO.read(database_file)).result)
