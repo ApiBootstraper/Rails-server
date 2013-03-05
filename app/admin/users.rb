@@ -19,6 +19,7 @@ ActiveAdmin.register User do
   scope :disabled
 
   # Fitlers
+  filter :uuid
   filter :email
   filter :username
   filter :is_enable
@@ -37,7 +38,7 @@ ActiveAdmin.register User do
     column("UUID")   {|u| link_to "#{u.uuid}", admin_user_path(u) }
     column("Username", :sortable => :name) {|u| link_to "#{u.username}", admin_user_path(u) }
     column :email
-    column("Active?")                              {|u| status_tag(u.is_enable? ? "Yes" : "No", u.is_enable? ? "ok" : "error") }
+    column("Active")                               {|u| status_tag(u.is_enable? ? "Yes" : "No", u.is_enable? ? "ok" : "error") }
     column("Created at", :sortable => :created_at) {|u| l(u.created_at, :format => :short) }
     column("Updated at", :sortable => :updated_at) {|u| l(u.updated_at, :format => :short) }
     default_actions
@@ -53,5 +54,7 @@ ActiveAdmin.register User do
     end
     f.buttons
   end
+
+  # TODO: Custom details view
 
 end

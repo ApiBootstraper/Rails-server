@@ -28,11 +28,20 @@ ActiveAdmin.register Todo do
     todos.where("accomplished_at IS NULL")
   end
 
+  # Fitlers
+  filter :uuid
+  filter :name
+  filter :user, :as => :select, :input_html => { :multiple => true }
+  # filter :is_accomplished, :as => :select, :collection => {nil => :any, true => :yes, false => :no}
+  filter :accomplished_at
+  filter :created_at
+  filter :updated_at
+
   # Index view
   index do
     selectable_column
-    column("\#", :sortable => :id)     {|t| link_to "#{t.id}", admin_admin_user_path(t) }
-    column("Name", :sortable => :name) {|t| link_to "#{t.name}", admin_admin_user_path(t) }
+    column("\#", :sortable => :id)     {|t| link_to "#{t.id}", admin_todo_path(t) }
+    column("Name", :sortable => :name) {|t| link_to "#{t.name}", admin_todo_path(t) }
     column("Accomplished", :sortable => :accomplished_at) {|t| status_tag(t.is_accomplished? ? "Yes" : "No", t.is_accomplished? ? "ok" : "error") }
     column("Created at", :sortable => :created_at)        {|t| l(t.created_at, :format => :short) }
     column("Updated at", :sortable => :updated_at)        {|t| l(t.updated_at, :format => :short) }
@@ -49,4 +58,7 @@ ActiveAdmin.register Todo do
     end
     f.buttons
   end
+
+  # TODO: Custom details view
+
 end

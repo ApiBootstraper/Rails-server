@@ -31,4 +31,6 @@ ActiveAdmin.register Tracking do
     column("")    {|t| "#{l( t.created_at, :format => :short )}" }
   end
 
+  # TODO: Custom details view
+
 end

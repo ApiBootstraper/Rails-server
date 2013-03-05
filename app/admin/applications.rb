@@ -51,4 +51,6 @@ ActiveAdmin.register Application do
     link_to "Regenerate App Key", generate_token_admin_application_path, :confirm => "Are you sure?", :method => :put
   end
 
+  # TODO: Custom details view
+
 end

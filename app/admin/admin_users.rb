@@ -24,4 +24,6 @@ ActiveAdmin.register AdminUser do
     f.buttons
   end
 
+  # TODO: Custom details view
+
 end

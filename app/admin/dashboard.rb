@@ -14,6 +14,8 @@ ActiveAdmin.register_page "Dashboard" do
             column :name
             column("User")  {|t| link_to "#{t.user.username}", admin_user_path(t.user) }
           end
+
+          para "&raquo; #{link_to "see all", admin_todos_path}".html_safe
         end
       end
 
@@ -24,6 +26,8 @@ ActiveAdmin.register_page "Dashboard" do
             column :email
             column("Active?") {|u| status_tag(u.is_enable? ? "Yes" : "No", u.is_enable? ? "ok" : "error") }
           end
+
+          para "&raquo; #{link_to "see all", admin_users_path}".html_safe
         end
       end
 
@@ -34,6 +38,8 @@ ActiveAdmin.register_page "Dashboard" do
             column :email
             column :updated_at
           end
+
+          para "&raquo; #{link_to "see all", admin_users_path(:q => {:is_enable_eq => false})}".html_safe
         end
       end
 
