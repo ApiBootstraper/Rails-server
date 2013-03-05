@@ -1,6 +1,6 @@
 class Todo < ActiveRecord::Base
   # Associations
-  belongs_to :user
+  belongs_to :user # TODO change the local name to author ?
 
   # Accessors
   attr_accessible :name, :description, :user_id, :is_accomplished
