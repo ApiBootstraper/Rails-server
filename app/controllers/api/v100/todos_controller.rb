@@ -39,7 +39,7 @@ class Api::V100::TodosController < Api::V100::BaseController
     if todo.update_attributes!(params_filter(params[:todo], [:name, :description]))
       return respond_with({:todo => @presenter.single(todo)})
     end
-    respond_with(nil, :status => {:msg => "Todo can't be updated", :code => 400})
+    respond_with({:errors => todo.errors}, :status => {:msg => "Todo can't be updated", :code => 400})
   end
 
   # Change accomplishment state of a Todo

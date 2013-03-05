@@ -34,7 +34,7 @@ class Api::V100::UsersController < Api::V100::BaseController
     if current_user.update_attributes! params_filter(params[:user], [:password, :email])
       return respond_with({:user => @presenter.single_for_current_user(current_user)}, :code => 200)
     end
-    respond_with(nil, :status => {:msg => "Current User can't be updated", :code => 400})
+    respond_with({:errors => current_user.errors}, :status => {:msg => "Current User can't be updated", :code => 400})
   end
 
   # Search users
