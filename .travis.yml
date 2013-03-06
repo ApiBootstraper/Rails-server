@@ -17,7 +17,7 @@ script:
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
   - bundle exec rspec spec/
-after_script:
+after_success:
 - git checkout heroku
 - gem install heroku
 - yes | ruby travis_deployer.rb
