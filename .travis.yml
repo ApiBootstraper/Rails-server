@@ -27,7 +27,7 @@ after_script:
 - heroku keys:remove travis@
 env:
   global:
-    secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
+    - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
 
         Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
 
