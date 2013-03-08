@@ -40,7 +40,7 @@ ActiveAdmin.register Todo do
   # Index view
   index do
     selectable_column
-    column("\#", :sortable => :id)     {|t| link_to "#{t.id}", admin_todo_path(t) }
+    column("UUID")                     {|t| link_to "#{t.uuid}", admin_todo_path(t) }
     column("Name", :sortable => :name) {|t| link_to "#{t.name}", admin_todo_path(t) }
     column("Accomplished", :sortable => :accomplished_at) {|t| status_tag(t.is_accomplished? ? "Yes" : "No", t.is_accomplished? ? "ok" : "error") }
     column("Created at", :sortable => :created_at)        {|t| l(t.created_at, :format => :short) }
