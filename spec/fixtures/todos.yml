@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+
+todo_1:
+    uuid: c555e160-5147-0130-8596-482a1450444f
+    name: "todo #1"
+    description: "description #1"
+    user: alice
+
+todo_2:
+    uuid: c666e160-5147-0130-8596-482a1450444f
+    name: "do it yourself"
+    description: "description #2"
+    user: bob
+
+todo_3:
+    uuid: c66ae160-5147-0130-8596-482a1450444f
+    name: "alice's todo #3"
+    description: "description #3"
+    user: alice
+
+todo_4:
+    uuid: c123e160-5147-0130-8596-482a1450444f
+    name: "todo #4"
+    description: "description #4"
+    user: bob
+
+todo_5:
+    uuid: caaae160-5147-0130-8596-482a1450444f
+    name: "do this task"
+    description: "description #5"
+    user: bob
