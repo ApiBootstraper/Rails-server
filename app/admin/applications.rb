@@ -25,12 +25,18 @@ ActiveAdmin.register Application do
   scope :enabled
   scope :disabled
 
+  # Fitlers
+  filter :app_id, :label => "App ID"
+  filter :name
+  filter :enable
+  filter :created_at
+  filter :updated_at
+
   # Index view
   index do
     selectable_column
     column("Name", :ordering => :name) {|a| link_to "#{a.name}", admin_application_path(a) }
     column("App Id")                   {|a| a.app_id }
-    column("App Key")                  {|a| a.app_key }
     column("Active?")                              {|a| status_tag(a.is_enable? ? "Yes" : "No", a.is_enable? ? "ok" : "error") }
     column("Created at", :sortable => :created_at) {|a| l(a.created_at, :format => :short) }
     column("Updated at", :sortable => :updated_at) {|a| l(a.updated_at, :format => :short) }
