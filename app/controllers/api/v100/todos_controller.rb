@@ -16,6 +16,8 @@ class Api::V100::TodosController < Api::V100::BaseController
   # GET /todos/:uuid
   def show
     todo = Todo.find_by_uuid!(params[:uuid])
+    return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't show it", :code => 403}) unless current_user === todo.user
+
     respond_with({:todo => @presenter.single(todo)})
   end
 
@@ -34,7 +36,7 @@ class Api::V100::TodosController < Api::V100::BaseController
   # PUT /todos/:uuid
   def update
     todo = Todo.find_by_uuid!(params[:uuid])
-    return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't update it", :code => 403}) if current_user != todo.user
+    return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't update it", :code => 403}) unless current_user === todo.user
 
     if todo.update_attributes!(params_filter(params[:todo], [:name, :description]))
       return respond_with({:todo => @presenter.single(todo)})
@@ -46,7 +48,7 @@ class Api::V100::TodosController < Api::V100::BaseController
   # PUT /todos/:uuid/(check|uncheck)
   def change_accomplishment
     todo = Todo.find_by_uuid!(params[:uuid])
-    return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't check it", :code => 403}) if current_user != todo.user
+    return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't check it", :code => 403}) unless current_user === todo.user
 
     todo.is_accomplished = params[:state] === 'check' ? true : false
 
@@ -61,7 +63,7 @@ class Api::V100::TodosController < Api::V100::BaseController
   # DELETE /todos/:uuid
   def destroy
     todo = Todo.find_by_uuid!(params[:uuid])
-    return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't delete it", :code => 403}) if current_user != todo.user
+    return respond_with(nil, :status => {:msg => "You are not the author of this todo, you can't delete it", :code => 403}) unless current_user === todo.user
 
     if todo.destroy
       return respond_with(nil)
@@ -76,7 +78,8 @@ class Api::V100::TodosController < Api::V100::BaseController
     return respond_with(nil, :status => {:msg => "Query length must be > 3", :code => 400}) if params[:q].length < 3
 
     offset, limit = api_offset_and_limit
-    todos = Todo.search(:name_contains => params[:q])
+    todos = Todo.where("user_id = ?", current_user.id)
+                .search(:name_or_description_contains => params[:q])
                 .order('updated_at DESC')
                 .offset(offset).limit(limit)
 

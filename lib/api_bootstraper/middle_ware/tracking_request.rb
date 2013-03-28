@@ -2,38 +2,35 @@ module ApiBootstraper
   module MiddleWare
     class TrackingRequest
 
-      def initialize(app)
+      def initialize(app) # :nodoc:
         @app = app
       end
 
-      def call(env)
+      def call(env) # :nodoc:
         before_call(env)
-        response = @app.call(env)
-        after_call(env, response)
+        status, headers, body = @app.call(env)
+        after_call(env, status, headers, body)
+
+        [status, headers, body]
       end
 
     private
-      #
       # Before call app
-      #
       def before_call(env)
-        start = Time.now
-        # TODO replace TrackingObject by Tracking ...
+        @start = Time.now
+        # TODO replace TrackingObject by Tracking Model ...
         env['tracking'] = TrackingObject.new
       end
 
-      #
       # After call app
-      #
-      def after_call(env, response)
-        status, headers, body = response
+      def after_call(env, status, headers, body)
         request = ActionDispatch::Request.new(env)
 
         if status == 401 \
             || env['action_dispatch.request.parameters'].nil? \
             || !env['action_dispatch.request.parameters']['controller'].start_with?("api")
 
-          return response
+          return
         end
 
         @tracking = Tracking.new({
@@ -53,19 +50,15 @@ module ApiBootstraper
           # :headers  => headers,
           # :etag     => headers['ETag'],
 
-          # :runtime  => Time.now - start
+          # :runtime  => Time.now - @start
         })
         # Rails.logger.info headers
         # Rails.logger.info request.query_parameters
 
         save_tracking(env) unless @tracking.nil?
-
-        return response
       end
 
-      #
       # Save the tracking object
-      #
       def save_tracking(env)
         if Rails.env.development?
           @tracking.save

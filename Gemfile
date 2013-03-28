@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -77,6 +77,7 @@ if File.exist?(database_file)
       when /mysql/
         gem "mysql", "~> 2.8.1", :platforms => [:mri_18, :mingw_18]
         gem "mysql2", "~> 0.3.11", :platforms => [:mri_19, :mingw_19]
+        gem "activerecord-mysql2-adapter", "~> 0.0.3", :platforms => [:mri_20, :mingw_20] if "#{RUBY_VERSION}".start_with?("2.0")
         gem "activerecord-jdbcmysql-adapter", :platforms => :jruby
       when /postgresql/
         gem "pg", ">= 0.11.0", :platforms => [:mri, :mingw]

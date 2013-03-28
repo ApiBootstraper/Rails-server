@@ -3,7 +3,7 @@ class Todo < ActiveRecord::Base
   belongs_to :user # TODO change the local name to author ?
 
   # Accessors
-  attr_accessible :name, :description, :user_id, :is_accomplished
+  attr_accessible :name, :description, :user, :is_accomplished
 
   # Hooks
   before_create :before_create
