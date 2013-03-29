@@ -82,7 +82,7 @@ if File.exist?(database_file)
       when /postgresql/
         gem "pg", ">= 0.11.0", :platforms => [:mri, :mingw]
         gem "activerecord-jdbcpostgresql-adapter", :platforms => :jruby
-        # gem 'texticle', "2.0", :require => 'texticle/rails', :platforms => ?
+        # gem 'textacular', '~> 3.0', require: 'textacular/rails', :platforms => ?
       when /sqlserver/
         gem "tiny_tds", "~> 0.5.1", :platforms => [:mri, :mingw]
         gem "activerecord-sqlserver-adapter", :platforms => [:mri, :mingw]
