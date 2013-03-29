@@ -25,19 +25,9 @@ after_success:
 - heroku run rake db:migrate --app nameless-forest-4117
 - heroku keys:remove travis@
 env:
-  -
-    global:
-      - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
+  global:
+    - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
 
-          Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
+        Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
 
-          Ap/mr/9h1UN3RlYd6t8Edh45BIkh+wqlBk0LsVfl9pLNKCHeOF8='
-      - DB=mysql
-  -
-    global:
-      - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
-
-          Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
-
-          Ap/mr/9h1UN3RlYd6t8Edh45BIkh+wqlBk0LsVfl9pLNKCHeOF8='
-      - DB=postgresql
+        Ap/mr/9h1UN3RlYd6t8Edh45BIkh+wqlBk0LsVfl9pLNKCHeOF8='
