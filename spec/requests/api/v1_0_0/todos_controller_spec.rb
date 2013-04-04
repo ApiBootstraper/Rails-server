@@ -64,22 +64,84 @@ describe "Api::V1_0_0::UsersController" do
 
 
   describe "GET /todos/my" do
+    it "works!" do
+      get "/todos/my", nil, @headers
 
+      response.status.should              be(200)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"]["todos"].count.should        eq(users(:alice).todos.count)
+      json["response"]["total"].should              eq(users(:alice).todos.count)
+    end
   end
 
 
   describe "PUT /todos/:uuid" do
+    it "change name works!" do
+      todo = users(:alice).todos.first
+      put "/todos/#{todo.uuid}", {:todo => {:name => "New todo name :)"}}, @headers
 
+      response.status.should              be(200)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"]["todo"]["name"].should           eq("New todo name :)")
+      json["response"]["todo"]["description"].should    eq(todo.description)
+      json["response"]["todo"]["uuid"].should           eq(todo.uuid)
+    end
+
+    it "change description works!" do
+      todo = users(:alice).todos.first
+      put "/todos/#{todo.uuid}", {:todo => {:description => "Awesome description for a todo ;)"}}, @headers
+
+      response.status.should              be(200)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"]["todo"]["name"].should           eq(todo.name)
+      json["response"]["todo"]["description"].should    eq("Awesome description for a todo ;)")
+      json["response"]["todo"]["uuid"].should           eq(todo.uuid)
+    end
   end
 
 
   describe "PUT /todos/:uuid/(check|uncheck)" do
+    it "not found todo works!" do
+      put "/todos/736bc280-58dd-012f-3d2e-482a1450444f/check", nil, @headers
 
+      response.status.should              be(404)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"].should be_nil
+      json["header"]["status"]["code"].should be(404)
+    end
+
+    it "can't check todo twice works!" do
+    end
+
+    it "check todo works!" do
+      todo = users(:alice).todos.first
+    end
+
+    it "uncheck todo works!" do
+      todo = users(:alice).todos.first
+    end
   end
 
 
   describe "DELETE /todos/:uuid" do
+    it "not found todo works!" do
+      delete "/todos/736bc280-58dd-012f-3d2e-482a1450444f", nil, @headers
 
+      response.status.should              be(404)
+      response.content_type.should        eq("application/json")
+      json = MultiJson.load(response.body)
+
+      json["response"].should be_nil
+      json["header"]["status"]["code"].should be(404)
+    end
   end
 
 
@@ -107,6 +169,7 @@ describe "Api::V1_0_0::UsersController" do
       json["response"]["limit"].should              eq(25)
       json["response"]["offset"].should             eq(0)
       json["response"]["total"].should              eq(1)
+      json["response"]["todos"].count.should        eq(1)
     end
 
     it "works with pagination!" do
@@ -120,6 +183,7 @@ describe "Api::V1_0_0::UsersController" do
       json["response"]["limit"].should              eq(25)
       json["response"]["offset"].should             eq(0)
       json["response"]["total"].should              eq(2)
+      json["response"]["todos"].count.should        eq(2)
     end
 
     it "works with limit!" do
@@ -134,6 +198,7 @@ describe "Api::V1_0_0::UsersController" do
       json["response"]["limit"].should              eq(1)
       json["response"]["offset"].should             eq(0)
       json["response"]["total"].should              eq(1)
+      json["response"]["todos"].count.should        eq(1)
     end
 
     it "works with offset!" do
@@ -147,6 +212,7 @@ describe "Api::V1_0_0::UsersController" do
       json["response"]["limit"].should              eq(25)
       json["response"]["offset"].should             eq(1)
       json["response"]["total"].should              eq(1)
+      json["response"]["todos"].count.should        eq(0)
     end
 
     it "works with limit and offset!" do
@@ -160,6 +226,7 @@ describe "Api::V1_0_0::UsersController" do
       json["response"]["limit"].should              eq(2)
       json["response"]["offset"].should             eq(1)
       json["response"]["total"].should              eq(2)
+      json["response"]["todos"].count.should        eq(1)
     end
   end
 
