@@ -54,6 +54,8 @@ gem 'jquery-rails'
 # If you want use rspec instead of the Tests of ActiveSupport
 group :test do
   gem 'rspec-rails'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'faker'
 end
 
 group :development do
