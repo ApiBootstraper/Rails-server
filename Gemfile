@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -54,6 +54,8 @@ gem 'jquery-rails'
 # If you want use rspec instead of the Tests of ActiveSupport
 group :test do
   gem 'rspec-rails'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'faker'
 end
 
 group :development do
@@ -82,7 +84,7 @@ if File.exist?(database_file)
       when /postgresql/
         gem "pg", ">= 0.11.0", :platforms => [:mri, :mingw]
         gem "activerecord-jdbcpostgresql-adapter", :platforms => :jruby
-        # gem 'texticle', "2.0", :require => 'texticle/rails', :platforms => ?
+        # gem 'textacular', '~> 3.0', require: 'textacular/rails', :platforms => ?
       when /sqlserver/
         gem "tiny_tds", "~> 0.5.1", :platforms => [:mri, :mingw]
         gem "activerecord-sqlserver-adapter", :platforms => [:mri, :mingw]
