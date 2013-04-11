@@ -43,13 +43,12 @@ class Api::V100::UsersController < Api::V100::BaseController
     return respond_with(nil, :status => {:msg => "Query can't be blank", :code => 400})     if params[:q].blank?
     return respond_with(nil, :status => {:msg => "Query length must be > 3", :code => 400}) if params[:q].length < 3
 
-    offset, limit = api_offset_and_limit
     users = User.enabled
                 .search(:username_or_email_contains => params[:q])
                 .order('updated_at DESC')
-                .offset(offset).limit(limit)
+                .paginate(params)
 
-    respond_with({:total => users.total_count, :limit => limit, :offset => offset, :query => params[:q], :users => @presenter.collection(users)})
+    respond_with({:total => users.total_count, :limit => users.limit_value, :offset => users.offset_value, :query => params[:q], :users => @presenter.collection(users)})
   end
 
   # Verify availability

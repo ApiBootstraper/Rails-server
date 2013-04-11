@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include ModelExtensions::Paginable
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable and :omniauthable
   devise :database_authenticatable, :token_authenticatable, :registerable, :encryptable,
@@ -55,10 +57,6 @@ class User < ActiveRecord::Base
   def disable!
     self.enable = false
     self.save!
-  end
-
-  def self.total_count
-    offset(nil).limit(nil).count
   end
 
 private

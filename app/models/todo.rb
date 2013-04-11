@@ -1,4 +1,6 @@
 class Todo < ActiveRecord::Base
+  include ModelExtensions::Paginable
+
   # Associations
   belongs_to :user # TODO change the local name to author ?
 
@@ -26,10 +28,6 @@ class Todo < ActiveRecord::Base
   end
   def is_accomplished; is_accomplished? end
   def is_accomplished?; !self.accomplished_at.nil? end
-
-  def self.total_count
-    offset(nil).limit(nil).count
-  end
 
 private
   def before_create

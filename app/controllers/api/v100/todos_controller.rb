@@ -24,12 +24,11 @@ class Api::V100::TodosController < Api::V100::BaseController
   # Get todos of current user
   # GET /todos/my
   def show_current_user_todos
-    offset, limit = api_offset_and_limit
     todos = Todo.where("user_id = ?", current_user.id)
                 .order("updated_at DESC")
-                .offset(offset).limit(limit)
+                .paginate(params)
 
-    respond_with({:total => todos.total_count, :limit => limit, :offset => offset, :todos => @presenter.collection(todos)})
+    respond_with({:total => todos.total_count, :limit => todos.limit_value, :offset => todos.offset_value, :todos => @presenter.collection(todos)})
   end
 
   # Update Todo
@@ -77,12 +76,11 @@ class Api::V100::TodosController < Api::V100::BaseController
     return respond_with(nil, :status => {:msg => "Query can't be blank", :code => 400})     if params[:q].blank?
     return respond_with(nil, :status => {:msg => "Query length must be > 3", :code => 400}) if params[:q].length < 3
 
-    offset, limit = api_offset_and_limit
     todos = Todo.where("user_id = ?", current_user.id)
                 .search(:name_or_description_contains => params[:q])
                 .order('updated_at DESC')
-                .offset(offset).limit(limit)
+                .paginate(params)
 
-    respond_with({:total => todos.total_count, :limit => limit, :offset => offset, :query => params[:q], :todos => @presenter.collection(todos)})
+    respond_with({:total => todos.total_count, :limit => todos.limit_value, :offset => todos.offset_value, :query => params[:q], :todos => @presenter.collection(todos)})
   end
 end
