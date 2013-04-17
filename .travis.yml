@@ -18,7 +18,7 @@ script:
   - bundle exec rspec spec/ --color
 after_success:
 - git checkout heroku
-- gem install heroku
+- wget -qO- https://toolbelt.heroku.com/install.sh | sh
 - yes | ruby travis_deployer.rb
 - yes | heroku keys:add
 - git push heroku heroku:master
