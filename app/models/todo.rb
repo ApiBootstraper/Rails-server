@@ -5,7 +5,7 @@ class Todo < ActiveRecord::Base
   belongs_to :user # TODO change the local name to author ?
 
   # Accessors
-  attr_accessible :name, :description, :user, :is_accomplished
+  attr_accessible :name, :description, :user, :user_id, :is_accomplished
 
   # Hooks
   before_create :before_create
@@ -20,6 +20,8 @@ class Todo < ActiveRecord::Base
   scope :unaccomplished, lambda{ where("is_accomplished != ?", true) }
 
   def is_accomplished= state
+    state = !!state
+
     if state === true && ! (is_accomplished? === true)
       self.accomplished_at = Time.now
     elsif ! (state === true) && (is_accomplished? === true)
