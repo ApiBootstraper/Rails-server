@@ -4,18 +4,24 @@ language: ruby
 rvm:
 - 1.9.2
 - 1.9.3
+- 2.0.0
+
 branches:
   only:
     - master
     - heroku
     - rails3
+
 before_script:
-  - mysql -e 'create database api_bootstraper_test'
-  - psql -c 'create database api_bootstraper_test' -U postgres
+  - if [[ "$DB" == "mysql" ]]; then mysql -e "CREATE DATABASE IF NOT EXISTS api_bootstraper_test;" -uroot; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c "DROP DATABASE IF EXISTS api_bootstraper_test;" -U postgres; fi
+  - if [[ "$DB" == "pgsql" ]]; then psql -c 'CREATE DATABASE api_bootstraper_test' -U postgres; fi
+
 script: 
   - RAILS_ENV=test bundle exec rake db:migrate --trace
   - bundle exec rake db:test:prepare
   - bundle exec rspec spec/ --color
+
 after_success:
 - git checkout heroku
 - gem install heroku
@@ -24,12 +30,13 @@ after_success:
 - git push heroku heroku:master
 - heroku run rake db:migrate --app nameless-forest-4117
 - heroku keys:remove travis@
+
 env:
-  global:
-    - secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
+  - global:
+    secure: ! 'JCcVcumANATuilKdZlqvsQk5i/cmk9Qm+1oGz4alL0rdF+lrABdx3lqXyvcQ
 
         Pvz9VOg81o/L1nOO4b4wGoqeiKa3Ki29xpSpVdGxPntjjZPmNKgb3UQvU5Ph
 
         Ap/mr/9h1UN3RlYd6t8Edh45BIkh+wqlBk0LsVfl9pLNKCHeOF8='
-    - DB=mysql
-    - DB=postgresql
+  - DB=mysql
+  - DB=postgresql
